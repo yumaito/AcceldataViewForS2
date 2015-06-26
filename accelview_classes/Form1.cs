@@ -102,65 +102,77 @@ namespace accelview_classes
         //変換してたまったデータを破棄
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            BeginInvoke((setfocus)delegate()
+            {
+                string r = serialPort1.ReadExisting();
+                //sensorData.pushDataBuffer()
+                //テキストボックスを加速度の値で埋めるメソッド
+                this.TextFill(this.sensorData.LastData);
+                //
+                this.ProcessingByReceive();
+                //再描画メソッドを呼び出す
+                pictureBox1.Invalidate();
+            });
             //labelReceived.Text = "Received Data="+serialPort1.ReadByte
             byte[] readdata = new byte[15];
             #region データチェック
-            while (serialPort1.BytesToRead > 4)
-            {
-                //読んだデータが8個以上なら
-                //頭から3バイトが<0x73><0x65><0x6E><0x62>になっていればそれ以降のバイトをデータとして取得
-                readdata[0] = (byte)serialPort1.ReadByte();//1バイト読む
-                if (readdata[0] == 0x73)
-                {
-                    //先頭が0x61なら
-                    readdata[1] = (byte)serialPort1.ReadByte();//1バイト読む
-                    if (readdata[1] == 0x65)
-                    {
-                        //2番目が0x67なら
-                        readdata[2] = (byte)serialPort1.ReadByte();//1バイト読む
-                        if (readdata[2] == 0x6E)
-                        {
-                            readdata[3] = (byte)serialPort1.ReadByte();
-                            //3番目が0x62なら
-                            if (readdata[3] == 0x62)
-                            //4番目が0x62なら
-                            {
-                                //ここまできたら先頭の4バイトはsenbであるので
-                                //以下、時刻（4バイト）、加速度（xyz各2バイト）、角速度（xyz各2バイト）、終端（1バイト（0xC1））となる
-                                for (int i = 4; i < 15; i++)
-                                {
-                                    readdata[i] = (byte)serialPort1.ReadByte();
-                                }
-                                if (readdata[14] == 0xc1)
-                                {
-                                    //-------------------------------------------------------
-                                    //クラスのインスタンス作成＆メソッド呼び出し
-                                    //終端が0xc1ならAccelDataを作成してSensorDataに追加
-                                    AccelData acd = new AccelData(readdata, dataType.accel);
-                                    sensorData.pushData(acd);
-                                    //------------------------------------------------------
-                                    //以下画面への描画関連の処理
-                                    Invoke((setfocus)delegate()
-                                    {
-                                        //テキストボックスを加速度の値で埋めるメソッド
-                                        this.TextFill(this.sensorData.LastData);
-                                        //
-                                        this.ProcessingByReceive();
-                                        //再描画メソッドを呼び出す
-                                        pictureBox1.Invalidate();
-                                    });
-                                    break;
-                                }
-                                else
-                                {
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                }
+            //while (serialPort1.BytesToRead > 4)
+            //{
+            //    //読んだデータが8個以上なら
+            //    //頭から3バイトが<0x73><0x65><0x6E><0x62>になっていればそれ以降のバイトをデータとして取得
+            //    readdata[0] = (byte)serialPort1.ReadByte();//1バイト読む
+            //    if (readdata[0] == 0x73)
+            //    {
+            //        //先頭が0x61なら
+            //        readdata[1] = (byte)serialPort1.ReadByte();//1バイト読む
+            //        if (readdata[1] == 0x65)
+            //        {
+            //            //2番目が0x67なら
+            //            readdata[2] = (byte)serialPort1.ReadByte();//1バイト読む
+            //            if (readdata[2] == 0x6E)
+            //            {
+            //                readdata[3] = (byte)serialPort1.ReadByte();
+            //                //3番目が0x62なら
+            //                if (readdata[3] == 0x62)
+            //                //4番目が0x62なら
+            //                {
+            //                    //ここまできたら先頭の4バイトはsenbであるので
+            //                    //以下、時刻（4バイト）、加速度（xyz各2バイト）、角速度（xyz各2バイト）、終端（1バイト（0xC1））となる
+            //                    for (int i = 4; i < 15; i++)
+            //                    {
+            //                        readdata[i] = (byte)serialPort1.ReadByte();
+            //                    }
+            //                    if (readdata[14] == 0xc1)
+            //                    {
+            //                        //-------------------------------------------------------
+            //                        //クラスのインスタンス作成＆メソッド呼び出し
+            //                        //終端が0xc1ならAccelDataを作成してSensorDataに追加
+            //                        AccelData acd = new AccelData(readdata, dataType.accel);
+            //                        sensorData.pushData(acd);
+            //                        //------------------------------------------------------
+            //                        //以下画面への描画関連の処理
+            //                        Invoke((setfocus)delegate()
+            //                        {
+            //                            //テキストボックスを加速度の値で埋めるメソッド
+            //                            this.TextFill(this.sensorData.LastData);
+            //                            //
+            //                            this.ProcessingByReceive();
+            //                            //再描画メソッドを呼び出す
+            //                            pictureBox1.Invalidate();
+            //                        });
+            //                        break;
+            //                    }
+            //                    else
+            //                    {
+            //                        continue;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             #endregion
-            }
+
         }
         private void toolStripButtonStart_Click(object sender, EventArgs e)
         {
