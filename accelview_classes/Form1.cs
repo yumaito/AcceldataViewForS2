@@ -51,6 +51,16 @@ namespace accelview_classes
             //    comboBoxCOMS.SelectedIndex = 0;
             //}
             toolStripComboBoxCOM.DropDownStyle = ComboBoxStyle.DropDownList;
+            //
+            foreach (SensorVer s in Enum.GetValues(typeof(SensorVer)))
+            {
+                toolStripComboBoxVersion.Items.Add(Statistics.GetDescription(s));
+            }
+            toolStripComboBoxVersion.DropDownStyle = ComboBoxStyle.DropDownList;
+            if (toolStripComboBoxVersion.Items.Count > 0)
+            {
+                toolStripComboBoxVersion.SelectedIndex = 0;
+            }
             //comboBoxCOMS.DropDownStyle = ComboBoxStyle.DropDownList;
             this.Clear();
             //-----------------------------------------
@@ -152,17 +162,6 @@ namespace accelview_classes
             #endregion
             }
         }
-        
-
-        //private void buttonStart_Click(object sender, EventArgs e)
-        //{
-            
-        //}
-
-        //private void buttonStop_Click(object sender, EventArgs e)
-        //{
-            
-        //}
         private void toolStripButtonStart_Click(object sender, EventArgs e)
         {
             this.SerialOpen();
@@ -416,10 +415,7 @@ namespace accelview_classes
         }
         #endregion
 
-        private void labelConnect_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
 
 

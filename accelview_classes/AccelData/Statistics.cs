@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
+using System.ComponentModel;
+using System.Drawing;
+
 
 namespace accelview_classes
 {
@@ -34,6 +38,20 @@ namespace accelview_classes
                 result[i] = result[i] / data.Count;
             }
             return result;
+        }
+
+        public static string GetDescription(object enumValue)
+        {
+            FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
+            if (null != fi)
+            {
+                object[] attrs = fi.GetCustomAttributes(typeof(DescriptionAttribute), true);
+                if (attrs != null && attrs.Length > 0)
+                {
+                    return ((DescriptionAttribute)attrs[0]).Description;
+                }
+            }
+            return "";
         }
         #endregion
     }

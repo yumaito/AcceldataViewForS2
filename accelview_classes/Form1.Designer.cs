@@ -70,6 +70,7 @@
             this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripComboBoxVersion = new System.Windows.Forms.ToolStripComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxAccel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -398,6 +399,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBoxVersion,
             this.toolStripComboBoxCOM,
             this.toolStripSeparator1,
             this.toolStripButtonStart,
@@ -455,6 +457,11 @@
             this.toolStripButtonSave.Size = new System.Drawing.Size(35, 22);
             this.toolStripButtonSave.Text = "保存";
             this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+            // 
+            // toolStripComboBoxVersion
+            // 
+            this.toolStripComboBoxVersion.Name = "toolStripComboBoxVersion";
+            this.toolStripComboBoxVersion.Size = new System.Drawing.Size(121, 25);
             // 
             // Form1
             // 
@@ -530,6 +537,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonStop;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxVersion;
     }
 }
 

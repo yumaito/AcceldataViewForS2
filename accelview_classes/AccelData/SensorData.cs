@@ -24,7 +24,7 @@ namespace accelview_classes
                 {dataType.gyro,15},
                 {dataType.both,20}
             };
-        private static Dictionary<dataType, byte[]> fixedData =
+        private static Dictionary<dataType, byte[]> fixedData1 =
             new Dictionary<dataType, byte[]>(){
                 {dataType.both,
                 new byte[]{0x73,0x65,0x6E,0x62}},
@@ -41,11 +41,11 @@ namespace accelview_classes
         /// <summary>
         /// 得るデータと受け取るデータの先頭固定バイト
         /// </summary>
-        public static Dictionary<dataType, byte[]> FixedData
+        public static Dictionary<dataType, byte[]> FixedData1
         {
             get
             {
-                return SensorData.fixedData;
+                return SensorData.fixedData1;
             }
         }
         /// <summary>
@@ -100,6 +100,7 @@ namespace accelview_classes
         public void pushDataBuffer(byte data)
         {
             this.dataBuffer.Add(data);
+            this.checkData(this.dataBuffer);
         }
         /// <summary>
         /// SensorDataにAccelDataを追加するメソッド
@@ -176,18 +177,35 @@ namespace accelview_classes
         }
         #endregion
         #region private
-        //public bool checkData(List<byte> data)
-        //{
-        //    //データ数が一定個以下ならfalseを返す
-        //    if (data.Count <= SensorData.requiredDataNum[this.currentType])
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
+        public bool checkData(List<byte> data)
+        {
+            bool result = true;
+            //データ数が一定個以下ならfalseを返す
+            if (data.Count <= SensorData.requiredDataNum[this.currentType])
+            {
+                result = false;
+            }
+            else
+            {
+                int num = SensorData.requiredDataNum[this.currentType];
+                int num2 = SensorData.fixedData1[this.currentType].Length;
+                for (int i = 0; i < num2; i++)
+                {
+                    if(data[i] != SensorData.fixedData1[this.currentType][i])
+                    {
+                        result = false;
+                    }
+                }
+                //先頭バイトが合致していればデータに変換して先頭を消去
+                if(result)
+                {
+                    List<byte> temp = data.GetRange(0, num);
+                    this.pushData(new AccelData(temp.ToArray(), this.currentType));
+                    data.RemoveRange(0, num);
+                }
+            }
+            return result;
+        }
         #endregion
         #endregion
     }

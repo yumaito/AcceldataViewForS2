@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace accelview_classes
 {
@@ -10,9 +11,11 @@ namespace accelview_classes
     {
         accel,gyro,both
     }
-    public enum SensorNuber
+    public enum SensorVer
     {
+        [Description("WAA-010")]
         WAA010,
-        TSND121
+        //[Description("TSND121")]
+        //TSND121
     }
 }
