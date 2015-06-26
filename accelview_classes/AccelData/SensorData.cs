@@ -17,14 +17,14 @@ namespace accelview_classes
         private List<byte> dataBuffer;
         private int bufferindex;
         private const int maximumData = 1000;
-        #region 静的変数
-        private static Dictionary<dataType, int> requiredDataNum =
+        #region 通信に必要な変数
+        private Dictionary<dataType, int> requiredDataNum =
             new Dictionary<dataType, int>(){
                 {dataType.accel,15},
                 {dataType.gyro,15},
                 {dataType.both,20}
             };
-        private static Dictionary<dataType, byte[]> fixedData1 =
+        private Dictionary<dataType, byte[]> fixedData =
             new Dictionary<dataType, byte[]>(){
                 {dataType.both,
                 new byte[]{0x73,0x65,0x6E,0x62}},
@@ -41,21 +41,21 @@ namespace accelview_classes
         /// <summary>
         /// 得るデータと受け取るデータの先頭固定バイト
         /// </summary>
-        public static Dictionary<dataType, byte[]> FixedData1
+        public Dictionary<dataType, byte[]> FixedData
         {
             get
             {
-                return SensorData.fixedData1;
+                return this.fixedData;
             }
         }
         /// <summary>
         /// 得るデータと配列の個数の関係
         /// </summary>
-        public static Dictionary<dataType,int> RequiredDataNum
+        public Dictionary<dataType,int> RequiredDataNum
         {
             get
             {
-                return SensorData.requiredDataNum;
+                return this.requiredDataNum;
             }
         }
         #endregion
@@ -80,9 +80,10 @@ namespace accelview_classes
 
 
         #region コンストラクタ
-        public SensorData(dataType type)
+        public SensorData(dataType type,SensorVer version)
         {
             this.currentType = type;
+            
             //allDataの初期化（必ず必要）
             this.allData = new List<AccelData>();
             //bufferの初期化
@@ -92,6 +93,16 @@ namespace accelview_classes
 
         #region メソッド
         #region public
+        public static void SensorChange(SensorVer version)
+        {
+            switch (version)
+            {
+                case SensorVer.WAA010:
+                    break;
+                case SensorVer.TSND121:
+                    break;
+            }
+        }
         /// <summary>
         /// シリアルポートからのデータを受け取りデータバッファに溜める
         /// もし加速度データに変更できるだけの量が溜まれば加速度データに変換後、該当データは破棄
@@ -181,17 +192,17 @@ namespace accelview_classes
         {
             bool result = true;
             //データ数が一定個以下ならfalseを返す
-            if (data.Count <= SensorData.requiredDataNum[this.currentType])
+            if (data.Count <= this.requiredDataNum[this.currentType])
             {
                 result = false;
             }
             else
             {
-                int num = SensorData.requiredDataNum[this.currentType];
-                int num2 = SensorData.fixedData1[this.currentType].Length;
+                int num = this.requiredDataNum[this.currentType];
+                int num2 = this.fixedData[this.currentType].Length;
                 for (int i = 0; i < num2; i++)
                 {
-                    if(data[i] != SensorData.fixedData1[this.currentType][i])
+                    if(data[i] != this.fixedData[this.currentType][i])
                     {
                         result = false;
                     }

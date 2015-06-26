@@ -15,7 +15,7 @@ namespace accelview_classes
     {
         [Description("WAA-010")]
         WAA010,
-        //[Description("TSND121")]
-        //TSND121
+        [Description("TSND121")]
+        TSND121
     }
 }
