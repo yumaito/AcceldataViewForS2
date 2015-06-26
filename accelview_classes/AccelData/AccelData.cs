@@ -17,6 +17,8 @@ namespace accelview_classes
         private XYZData accel;
         private XYZData gyro;
         private dataType d;
+        private byte[] databuffer;
+        private int index;
         #endregion
 
         #region プロパティ
@@ -59,8 +61,6 @@ namespace accelview_classes
         }
         #endregion
 
-
-
         #region コンストラクタ
         /// <summary>
         /// 加速度データのインスタンス生成
@@ -82,7 +82,7 @@ namespace accelview_classes
         {
             if (d == dataType.both)
             {
-                if (byteData.Length != 20)
+                if (byteData.Length != 25)
                 {
                     throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
                 }
@@ -105,6 +105,10 @@ namespace accelview_classes
             }
             else if(d == dataType.accel)
             {
+                if(byteData.Length != 25)
+                {
+                    throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
+                }
                 //
                 this.time = (short)(byteData[4] << 24 | byteData[5] << 16 | byteData[6] << 8 | byteData[7]);
                 byte[] data = new byte[6];

@@ -14,7 +14,7 @@ namespace accelview_classes
 {
     public partial class Form1 : Form
     {
-        Data alldata;
+        //Data alldata;
         #region メンバ変数
         SensorData sensorData;
         //bool openFlag;
@@ -48,7 +48,7 @@ namespace accelview_classes
             //-----------------------------------------
             //クラスのインスタンス生成
             //各変数の初期化
-            sensorData = new SensorData();
+            //sensorData = new SensorData();
             //-----------------------------------------
             colors = new Color[] { Color.Red, Color.ForestGreen, Color.Blue, Color.Orange, Color.LightSeaGreen, Color.Turquoise };
             checkBoxX.ForeColor = colors[0];
@@ -76,12 +76,15 @@ namespace accelview_classes
         #endregion
 
         #region シリアル通信関係
-        //シリアルデータ取得
-        //データを受け取ったらDataConvertクラスでデータをAccel型に変換ののち、sensorDataオブジェクトにデータを投げる
+        //シリアルデータ取得（ここは解析を高速にするため要修正）
+        //データを受け取ったらデータをAccel型に変換ののち、sensorDataオブジェクトにデータを投げる
+        //改正案（データを常にバッファにため続ける、別スレッドで溜まったデータを監視、加速度データに変換できるようになれば
+        //変換してたまったデータを破棄
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             //labelReceived.Text = "Received Data="+serialPort1.ReadByte
             byte[] readdata = new byte[15];
+            #region データチェック
             while (serialPort1.BytesToRead > 4)
             {
                 //読んだデータが8個以上なら
@@ -136,6 +139,7 @@ namespace accelview_classes
                         }
                     }
                 }
+            #endregion
             }
         }
         
@@ -143,9 +147,10 @@ namespace accelview_classes
         private void buttonStart_Click(object sender, EventArgs e)
         {
             labelConnect.Text = "接続中...";
-            string cmd = "senb +000000000 5 4 0 \n";
+            string cmd = "agb +000000000 5 4 0 \n";
             if (!serialPort1.IsOpen)
             {
+                this.sensorData = new SensorData(dataType.both);
                 //シリアルポートが開いていないなら
                 serialPort1.Close();
                 serialPort1.PortName = comboBoxCOMS.SelectedItem.ToString();
@@ -317,7 +322,10 @@ namespace accelview_classes
         /// <param name="e"></param>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            this.DrawGraphs(e.Graphics);
+            if (this.sensorData != null)
+            {
+                this.DrawGraphs(e.Graphics);
+            }
         }
 
         #region その他データ受信毎に実行されるメソッド
@@ -337,17 +345,17 @@ namespace accelview_classes
         #region 保存関係
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            alldata = new Data();
+            //alldata = new Data();
             int time = 0;
             int rtime = 0;
             double t = 1.0;
             double t1 = 1.0;
             double t2 = 1.0;
-            TMP temp = new TMP(time, rtime, t, t1, t2);
-            alldata.PushData(new TMP(time, rtime, t, t1, t2));
-            alldata.PushData(temp);
+            //TMP temp = new TMP(time, rtime, t, t1, t2);
+            //alldata.PushData(new TMP(time, rtime, t, t1, t2));
+            //alldata.PushData(temp);
 
-            int num = alldata.D[0].Time;
+            //int num = alldata.D[0].Time;
             //alldata.D[0].Time = 0;
 
             //センサの読み取りをストップしてから保存処理

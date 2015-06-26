@@ -13,3 +13,9 @@ C:\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.pdb
 C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\bin\Debug\accelview_classes.exe.config
 C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.exe
 C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.pdb
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\bin\Debug\accelview_classes.exe
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\bin\Debug\accelview_classes.pdb
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.csprojResolveAssemblyReference.cache
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.Form1.resources
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.Properties.Resources.resources
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.csproj.GenerateResource.Cache
