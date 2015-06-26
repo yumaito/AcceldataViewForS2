@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.buttonStart = new System.Windows.Forms.Button();
-            this.buttonStop = new System.Windows.Forms.Button();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.labelConnect = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,8 +43,6 @@
             this.textBoxGZ = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.comboBoxCOMS = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.groupBoxAccel = new System.Windows.Forms.GroupBox();
@@ -63,58 +58,33 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelConnectCondition = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripComboBoxCOM = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonStart = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxAccel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBoxGyro.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonStart
-            // 
-            this.buttonStart.Location = new System.Drawing.Point(12, 12);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(96, 49);
-            this.buttonStart.TabIndex = 0;
-            this.buttonStart.Text = "スタート";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
-            // 
-            // buttonStop
-            // 
-            this.buttonStop.Location = new System.Drawing.Point(12, 67);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(96, 49);
-            this.buttonStop.TabIndex = 1;
-            this.buttonStop.Text = "ストップ";
-            this.buttonStop.UseVisualStyleBackColor = true;
-            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(12, 122);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(96, 49);
-            this.buttonSave.TabIndex = 2;
-            this.buttonSave.Text = "保存";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // labelConnect
-            // 
-            this.labelConnect.AutoSize = true;
-            this.labelConnect.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelConnect.Location = new System.Drawing.Point(127, 19);
-            this.labelConnect.Name = "labelConnect";
-            this.labelConnect.Size = new System.Drawing.Size(82, 24);
-            this.labelConnect.TabIndex = 3;
-            this.labelConnect.Text = "未接続";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(214, 85);
+            this.label2.Location = new System.Drawing.Point(210, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 4;
@@ -123,7 +93,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(335, 85);
+            this.label3.Location = new System.Drawing.Point(331, 12);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 5;
@@ -132,7 +102,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(159, 104);
+            this.label4.Location = new System.Drawing.Point(155, 31);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(23, 12);
             this.label4.TabIndex = 6;
@@ -141,7 +111,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(160, 129);
+            this.label5.Location = new System.Drawing.Point(156, 56);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(23, 12);
             this.label5.TabIndex = 7;
@@ -150,7 +120,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(160, 155);
+            this.label6.Location = new System.Drawing.Point(156, 82);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(22, 12);
             this.label6.TabIndex = 8;
@@ -158,7 +128,7 @@
             // 
             // textBoxX
             // 
-            this.textBoxX.Location = new System.Drawing.Point(188, 102);
+            this.textBoxX.Location = new System.Drawing.Point(184, 29);
             this.textBoxX.Name = "textBoxX";
             this.textBoxX.ReadOnly = true;
             this.textBoxX.Size = new System.Drawing.Size(100, 19);
@@ -166,7 +136,7 @@
             // 
             // textBoxGX
             // 
-            this.textBoxGX.Location = new System.Drawing.Point(304, 101);
+            this.textBoxGX.Location = new System.Drawing.Point(300, 28);
             this.textBoxGX.Name = "textBoxGX";
             this.textBoxGX.ReadOnly = true;
             this.textBoxGX.Size = new System.Drawing.Size(100, 19);
@@ -174,7 +144,7 @@
             // 
             // textBoxY
             // 
-            this.textBoxY.Location = new System.Drawing.Point(188, 126);
+            this.textBoxY.Location = new System.Drawing.Point(184, 53);
             this.textBoxY.Name = "textBoxY";
             this.textBoxY.ReadOnly = true;
             this.textBoxY.Size = new System.Drawing.Size(100, 19);
@@ -182,7 +152,7 @@
             // 
             // textBoxGY
             // 
-            this.textBoxGY.Location = new System.Drawing.Point(304, 126);
+            this.textBoxGY.Location = new System.Drawing.Point(300, 53);
             this.textBoxGY.Name = "textBoxGY";
             this.textBoxGY.ReadOnly = true;
             this.textBoxGY.Size = new System.Drawing.Size(100, 19);
@@ -190,7 +160,7 @@
             // 
             // textBoxZ
             // 
-            this.textBoxZ.Location = new System.Drawing.Point(188, 152);
+            this.textBoxZ.Location = new System.Drawing.Point(184, 79);
             this.textBoxZ.Name = "textBoxZ";
             this.textBoxZ.ReadOnly = true;
             this.textBoxZ.Size = new System.Drawing.Size(100, 19);
@@ -198,7 +168,7 @@
             // 
             // textBoxGZ
             // 
-            this.textBoxGZ.Location = new System.Drawing.Point(304, 152);
+            this.textBoxGZ.Location = new System.Drawing.Point(300, 79);
             this.textBoxGZ.Name = "textBoxGZ";
             this.textBoxGZ.ReadOnly = true;
             this.textBoxGZ.Size = new System.Drawing.Size(100, 19);
@@ -208,9 +178,9 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 248);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 158);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(481, 287);
+            this.pictureBox1.Size = new System.Drawing.Size(461, 298);
             this.pictureBox1.TabIndex = 15;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -219,27 +189,10 @@
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
-            // comboBoxCOMS
-            // 
-            this.comboBoxCOMS.FormattingEnabled = true;
-            this.comboBoxCOMS.Location = new System.Drawing.Point(304, 23);
-            this.comboBoxCOMS.Name = "comboBoxCOMS";
-            this.comboBoxCOMS.Size = new System.Drawing.Size(121, 20);
-            this.comboBoxCOMS.TabIndex = 16;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(234, 26);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 12);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "COMの選択";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(153, 62);
+            this.label1.Location = new System.Drawing.Point(12, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 18;
@@ -247,7 +200,7 @@
             // 
             // textBoxTime
             // 
-            this.textBoxTime.Location = new System.Drawing.Point(188, 59);
+            this.textBoxTime.Location = new System.Drawing.Point(47, 9);
             this.textBoxTime.Name = "textBoxTime";
             this.textBoxTime.ReadOnly = true;
             this.textBoxTime.Size = new System.Drawing.Size(100, 19);
@@ -256,7 +209,7 @@
             // groupBoxAccel
             // 
             this.groupBoxAccel.Controls.Add(this.flowLayoutPanel1);
-            this.groupBoxAccel.Location = new System.Drawing.Point(12, 196);
+            this.groupBoxAccel.Location = new System.Drawing.Point(6, 106);
             this.groupBoxAccel.Name = "groupBoxAccel";
             this.groupBoxAccel.Size = new System.Drawing.Size(117, 46);
             this.groupBoxAccel.TabIndex = 20;
@@ -313,7 +266,7 @@
             // groupBoxGyro
             // 
             this.groupBoxGyro.Controls.Add(this.flowLayoutPanel2);
-            this.groupBoxGyro.Location = new System.Drawing.Point(135, 196);
+            this.groupBoxGyro.Location = new System.Drawing.Point(129, 106);
             this.groupBoxGyro.Name = "groupBoxGyro";
             this.groupBoxGyro.Size = new System.Drawing.Size(120, 46);
             this.groupBoxGyro.TabIndex = 21;
@@ -369,7 +322,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabelConnectCondition});
             this.statusStrip1.Location = new System.Drawing.Point(0, 543);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(505, 22);
@@ -381,34 +335,137 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
+            // toolStripStatusLabelConnectCondition
+            // 
+            this.toolStripStatusLabelConnectCondition.Name = "toolStripStatusLabelConnectCondition";
+            this.toolStripStatusLabelConnectCondition.Size = new System.Drawing.Size(67, 17);
+            this.toolStripStatusLabelConnectCondition.Text = "接続状態：";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 52);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(481, 488);
+            this.tabControl1.TabIndex = 23;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.groupBoxGyro);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.groupBoxAccel);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.textBoxTime);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.textBoxX);
+            this.tabPage1.Controls.Add(this.textBoxGX);
+            this.tabPage1.Controls.Add(this.textBoxY);
+            this.tabPage1.Controls.Add(this.textBoxGZ);
+            this.tabPage1.Controls.Add(this.textBoxGY);
+            this.tabPage1.Controls.Add(this.textBoxZ);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(473, 462);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "メインビュー";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(473, 462);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(505, 24);
+            this.menuStrip1.TabIndex = 25;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBoxCOM,
+            this.toolStripSeparator1,
+            this.toolStripButtonStart,
+            this.toolStripButtonStop,
+            this.toolStripSeparator2,
+            this.toolStripButtonSave});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(505, 25);
+            this.toolStrip1.TabIndex = 26;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripComboBoxCOM
+            // 
+            this.toolStripComboBoxCOM.Name = "toolStripComboBoxCOM";
+            this.toolStripComboBoxCOM.Size = new System.Drawing.Size(121, 25);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonStart
+            // 
+            this.toolStripButtonStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonStart.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonStart.Image")));
+            this.toolStripButtonStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonStart.Name = "toolStripButtonStart";
+            this.toolStripButtonStart.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButtonStart.Text = "スタート";
+            this.toolStripButtonStart.Click += new System.EventHandler(this.toolStripButtonStart_Click);
+            // 
+            // toolStripButtonStop
+            // 
+            this.toolStripButtonStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonStop.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonStop.Image")));
+            this.toolStripButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonStop.Name = "toolStripButtonStop";
+            this.toolStripButtonStop.RightToLeftAutoMirrorImage = true;
+            this.toolStripButtonStop.Size = new System.Drawing.Size(44, 22);
+            this.toolStripButtonStop.Text = "ストップ";
+            this.toolStripButtonStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonSave
+            // 
+            this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSave.Image")));
+            this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSave.Name = "toolStripButtonSave";
+            this.toolStripButtonSave.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButtonSave.Text = "保存";
+            this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 565);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.groupBoxGyro);
-            this.Controls.Add(this.groupBoxAccel);
-            this.Controls.Add(this.textBoxTime);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBoxCOMS);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.textBoxGZ);
-            this.Controls.Add(this.textBoxZ);
-            this.Controls.Add(this.textBoxGY);
-            this.Controls.Add(this.textBoxY);
-            this.Controls.Add(this.textBoxGX);
-            this.Controls.Add(this.textBoxX);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.labelConnect);
-            this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.buttonStop);
-            this.Controls.Add(this.buttonStart);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "加速度センサを使おう！改";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -421,6 +478,11 @@
             this.flowLayoutPanel2.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,10 +490,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.Button buttonStop;
-        private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.Label labelConnect;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -445,8 +503,6 @@
         private System.Windows.Forms.TextBox textBoxGZ;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.IO.Ports.SerialPort serialPort1;
-        private System.Windows.Forms.ComboBox comboBoxCOMS;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxTime;
         private System.Windows.Forms.GroupBox groupBoxAccel;
@@ -462,6 +518,18 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelConnectCondition;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxCOM;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonStart;
+        private System.Windows.Forms.ToolStripButton toolStripButtonStop;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSave;
     }
 }
 

@@ -19,6 +19,7 @@ namespace accelview_classes
         SensorData sensorData;
         //bool openFlag;
         delegate void setfocus();
+
         Color[] colors;
         #endregion
         #region メソッド
@@ -32,18 +33,25 @@ namespace accelview_classes
             //利用可能なシリアルポート名の配列を取得する
             string[] PortList = SerialPort.GetPortNames();
             //コンボボックスの中身を消去
-            comboBoxCOMS.Items.Clear();
+            //comboBoxCOMS.Items.Clear();
+            toolStripComboBoxCOM.Items.Clear();
             //シリアルポート名をコンボボックスにセットする
             foreach (string name in PortList)
             {
-                comboBoxCOMS.Items.Add(name);
+                //comboBoxCOMS.Items.Add(name);
+                toolStripComboBoxCOM.Items.Add(name);
             }
             //COMが1個以上あれば1番目を選択状態にしておく
-            if (comboBoxCOMS.Items.Count > 0)
+            if(toolStripComboBoxCOM.Items.Count>0)
             {
-                comboBoxCOMS.SelectedIndex = 0;
+                toolStripComboBoxCOM.SelectedIndex = 0;
             }
-            comboBoxCOMS.DropDownStyle = ComboBoxStyle.DropDownList;
+            //if (comboBoxCOMS.Items.Count > 0)
+            //{
+            //    comboBoxCOMS.SelectedIndex = 0;
+            //}
+            toolStripComboBoxCOM.DropDownStyle = ComboBoxStyle.DropDownList;
+            //comboBoxCOMS.DropDownStyle = ComboBoxStyle.DropDownList;
             this.Clear();
             //-----------------------------------------
             //クラスのインスタンス生成
@@ -62,6 +70,8 @@ namespace accelview_classes
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //
+            toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
         }
         //画面の表示を初期化する
         private void Clear()
@@ -144,39 +154,57 @@ namespace accelview_classes
         }
         
 
-        private void buttonStart_Click(object sender, EventArgs e)
+        //private void buttonStart_Click(object sender, EventArgs e)
+        //{
+            
+        //}
+
+        //private void buttonStop_Click(object sender, EventArgs e)
+        //{
+            
+        //}
+        private void toolStripButtonStart_Click(object sender, EventArgs e)
         {
-            labelConnect.Text = "接続中...";
+            this.SerialOpen();
+        }
+
+        private void toolStripButtonStop_Click(object sender, EventArgs e)
+        {
+            this.SerialClose();
+        }
+        private void SerialOpen()
+        {
+            toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
             string cmd = "agb +000000000 5 4 0 \n";
             if (!serialPort1.IsOpen)
             {
                 this.sensorData = new SensorData(dataType.both);
                 //シリアルポートが開いていないなら
                 serialPort1.Close();
-                serialPort1.PortName = comboBoxCOMS.SelectedItem.ToString();
+                serialPort1.PortName = toolStripComboBoxCOM.SelectedItem.ToString();
                 serialPort1.Open();
-                labelConnect.Text = "接続";
+                toolStripStatusLabelConnectCondition.Text = "接続状態：接続";
                 //加速度と角速度をstopされるまで出力する
                 serialPort1.Write(cmd);
             }
             else
             {
-                labelConnect.Text = "接続";
+                toolStripStatusLabelConnectCondition.Text = "接続状態：接続";
                 //加速度と角速度をstopされるまで出力する
                 serialPort1.Write(cmd);
             }
 
         }
-
-        private void buttonStop_Click(object sender, EventArgs e)
+        private void SerialClose()
         {
             if (serialPort1.IsOpen)
             {
                 //シリアルポートが開いているなら
                 //切断する処理を行う
                 serialPort1.Write("stop all \n");
+                toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
                 //serialPort1.Close();
-                
+
                 //serialPort1.Close();
                 //labelConnect.Text = "未接続";
             }
@@ -343,7 +371,12 @@ namespace accelview_classes
         #endregion
 
         #region 保存関係
-        private void buttonSave_Click(object sender, EventArgs e)
+        //private void buttonSave_Click(object sender, EventArgs e)
+        //{
+            
+        //}
+
+        private void toolStripButtonSave_Click(object sender, EventArgs e)
         {
             //alldata = new Data();
             int time = 0;
@@ -365,7 +398,8 @@ namespace accelview_classes
                 //切断する処理を行う
                 serialPort1.Write("stop all \n");
                 //serialPort1.Close();
-                labelConnect.Text = "未接続";
+                toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
+                //labelConnect.Text = "未接続";
                 if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     Encoding enc = Encoding.GetEncoding("Shift_JIS");
@@ -382,9 +416,28 @@ namespace accelview_classes
         }
         #endregion
 
+        private void labelConnect_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
 
         #endregion
+
+        
+
+        
+
+        //private void label7_Click(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void comboBoxCOMS_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
     }
         
 }
