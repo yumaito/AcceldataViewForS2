@@ -29,7 +29,9 @@ namespace accelview_classes
                 {dataType.both,
                 new byte[]{0x73,0x65,0x6E,0x62}},
                 {dataType.accel,
-                new byte[]{0x61,0x67,0x62}}
+                new byte[]{0x61,0x67,0x62}},
+                {dataType.gyro,
+                    new byte[]{0x67,0x79,0x62}}
             };
         #endregion
         #endregion
