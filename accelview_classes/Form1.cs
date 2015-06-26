@@ -189,7 +189,7 @@ namespace accelview_classes
             string cmd = "agb +000000000 5 4 0 \n";
             if (!serialPort1.IsOpen)
             {
-                this.sensorData = new SensorData(dataType.both);
+                this.sensorData = new SensorData(dataType.both, (SensorVer)toolStripComboBoxVersion.SelectedIndex);
                 //シリアルポートが開いていないなら
                 serialPort1.Close();
                 serialPort1.PortName = toolStripComboBoxCOM.SelectedItem.ToString();
@@ -223,6 +223,10 @@ namespace accelview_classes
         #endregion
 
         #region 画面への描画など
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            this.pictureBox1.Invalidate();
+        }
         /// <summary>
         /// テキストボックスへの描画
         /// </summary>
@@ -348,7 +352,7 @@ namespace accelview_classes
         /// <param name="h"></param>
         /// <param name="ratio"></param>
         /// <returns></returns>
-        private int AdjustY(short y, int h, int ratio)
+        private int AdjustY(int y, int h, int ratio)
         {
             int result = h / 2 - y;
             return h / 2 - y / ratio;
@@ -426,6 +430,8 @@ namespace accelview_classes
             }
         }
         #endregion
+
+        
 
         
 

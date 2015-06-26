@@ -13,23 +13,23 @@ namespace accelview_classes
 
     {
         #region メンバ変数
-        private short time;
+        private int time;
         private XYZData accel;
         private XYZData gyro;
         private dataType d;
-        private byte[] databuffer;
-        private int index;
+        //private byte[] databuffer;
+        //private int index;
         #endregion
 
         #region プロパティ
         /// <summary>
-        /// 時刻
+        /// 時刻（int型）
         /// </summary>
-        public short Time
+        public int Time
         {
             get
             {
-                return time;
+                return this.time;
             }
         }
         /// <summary>
@@ -78,8 +78,18 @@ namespace accelview_classes
         /// 加速度データのインスタンス生成
         /// </summary>
         /// <param name="byteData">20個の要素からなるバイト型配列</param>
-        public AccelData(byte[] byteData, dataType d)
+        public AccelData(byte[] byteData, dataType d, SensorVer sensor)
         {
+            switch(sensor)
+            {
+                case SensorVer.WAA010:
+                    this.CreateDataFor010(d, byteData);
+                    break;
+                case SensorVer.TSND121:
+                    this.CreateDataFor121(d, byteData);
+                    break;
+            }
+
             if (d == dataType.both)
             {
                 if (byteData.Length != 25)
@@ -103,9 +113,9 @@ namespace accelview_classes
                 //自クラスのメソッド呼び出し
                 this.gyro = this.ReturnData(data);
             }
-            else if(d == dataType.accel)
+            else if (d == dataType.accel)
             {
-                if(byteData.Length != 25)
+                if (byteData.Length != 25)
                 {
                     throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
                 }
@@ -116,7 +126,7 @@ namespace accelview_classes
                 Buffer.BlockCopy(byteData, 8 * typeSize, data, 0, 6 * typeSize);
                 //
                 this.accel = this.ReturnData(data);
-               
+
             }
             else
             {
@@ -133,7 +143,7 @@ namespace accelview_classes
         /// </summary>
         /// <param name="num">0～2なら加速度の値、3～5なら角速度の値</param>
         /// <returns></returns>
-        public short ReturnByNumber(int num)
+        public int ReturnByNumber(int num)
         {
             if (num < 3)
             {
@@ -148,6 +158,39 @@ namespace accelview_classes
                 return this.accel.X;
             }
         }
+        private void CreateDataFor010(dataType d, byte[] data)
+        {
+            //リストに変換（抽出がやりやすいので）
+            List<byte> temp = data.ToList();
+            switch(d)
+            {
+                case dataType.both:
+                    this.CreateTime(temp.GetRange(3, 4).ToArray());
+                    this.accel = this.ReturnData(temp.GetRange(7, 6).ToArray());
+                    this.gyro = this.ReturnData(temp.GetRange(13, 6).ToArray());
+                    break;
+                case dataType.accel:
+                    this.CreateTime(temp.GetRange(4, 4).ToArray());
+                    this.accel = this.ReturnData(temp.GetRange(8, 6).ToArray());
+                    break;
+                case dataType.gyro:
+                    this.CreateTime(temp.GetRange(3, 4).ToArray());
+                    this.gyro = this.ReturnData(temp.GetRange(7, 6).ToArray());
+                    break;
+            }
+        }
+        private void CreateDataFor121(dataType d, byte[] data)
+        {
+
+        }
+        /// <summary>
+        /// 時刻を生成する
+        /// </summary>
+        /// <param name="data"></param>
+        private void CreateTime(byte[] data)
+        {
+            this.time = (int)(data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3]);
+        }
         /// <summary>
         /// byte型の配列からXYZData型のインスタンスを返すメソッド
         /// </summary>
@@ -155,9 +198,9 @@ namespace accelview_classes
         /// <returns></returns>
         private XYZData ReturnData(byte[] data)
         {
-            short x = (short)(data[0] << 8 | data[1]);
-            short y = (short)(data[2] << 8 | data[3]);
-            short z = (short)(data[4] << 8 | data[5]);
+            int x = (int)(data[0] << 8 | data[1]);
+            int y = (int)(data[2] << 8 | data[3]);
+            int z = (int)(data[4] << 8 | data[5]);
             return new XYZData(x, y, z);
         }
         /// <summary>

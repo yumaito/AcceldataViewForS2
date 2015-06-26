@@ -13,26 +13,14 @@ namespace accelview_classes
     {
         #region メンバ変数
         private dataType currentType;
+        private SensorVer version;
         private List<AccelData> allData;
         private List<byte> dataBuffer;
         private int bufferindex;
         private const int maximumData = 1000;
         #region 通信に必要な変数
-        private Dictionary<dataType, int> requiredDataNum =
-            new Dictionary<dataType, int>(){
-                {dataType.accel,15},
-                {dataType.gyro,15},
-                {dataType.both,20}
-            };
-        private Dictionary<dataType, byte[]> fixedData =
-            new Dictionary<dataType, byte[]>(){
-                {dataType.both,
-                new byte[]{0x73,0x65,0x6E,0x62}},
-                {dataType.accel,
-                new byte[]{0x61,0x67,0x62}},
-                {dataType.gyro,
-                    new byte[]{0x67,0x79,0x62}}
-            };
+        private Dictionary<dataType, int> requiredDataNum;
+        private Dictionary<dataType, byte[]> fixedData;
         #endregion
         #endregion
 
@@ -80,10 +68,11 @@ namespace accelview_classes
 
 
         #region コンストラクタ
-        public SensorData(dataType type,SensorVer version)
+        public SensorData(dataType type, SensorVer version)
         {
             this.currentType = type;
-            
+            this.version = version;
+            this.SensorChange(version);
             //allDataの初期化（必ず必要）
             this.allData = new List<AccelData>();
             //bufferの初期化
@@ -93,11 +82,22 @@ namespace accelview_classes
 
         #region メソッド
         #region public
-        public static void SensorChange(SensorVer version)
+        public void SensorChange(SensorVer version)
         {
             switch (version)
             {
                 case SensorVer.WAA010:
+                    this.requiredDataNum = new Dictionary<dataType, int>();
+                    #region 配列の個数
+                    requiredDataNum.Add(dataType.accel, 15);
+                    requiredDataNum.Add(dataType.both, 20);
+                    requiredDataNum.Add(dataType.gyro, 15);
+                    #endregion
+                    #region
+                    fixedData.Add(dataType.both, new byte[] { 0x61, 0x67, 0x62 });//agb
+                    fixedData.Add(dataType.accel, new byte[] { 0x73, 0x65, 0x6E, 0x62 });//senb
+                    fixedData.Add(dataType.gyro, new byte[] { 0x67, 0x79, 0x62 });//gyb
+                    #endregion
                     break;
                 case SensorVer.TSND121:
                     break;
@@ -117,7 +117,7 @@ namespace accelview_classes
         /// SensorDataにAccelDataを追加するメソッド
         /// </summary>
         /// <param name="input">AccelData</param>
-        public void pushData(AccelData input)
+        private void pushData(AccelData input)
         {
             this.allData.Add(input);
             //もしデータの個数がmaximumDataを超えたら、リストの最初の値を削除
@@ -211,7 +211,7 @@ namespace accelview_classes
                 if(result)
                 {
                     List<byte> temp = data.GetRange(0, num);
-                    this.pushData(new AccelData(temp.ToArray(), this.currentType));
+                    this.pushData(new AccelData(temp.ToArray(), this.currentType, this.version));
                     data.RemoveRange(0, num);
                 }
             }

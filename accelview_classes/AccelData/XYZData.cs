@@ -9,16 +9,16 @@ namespace accelview_classes
     public class XYZData
     {
         #region メンバ変数
-        private short x;//x軸
-        private short y;//y軸
-        private short z;//z軸
+        private int x;//x軸
+        private int y;//y軸
+        private int z;//z軸
         #endregion
 
         #region プロパティ
         /// <summary>
         /// X軸データ
         /// </summary>
-        public short X
+        public int X
         {
             get
             {
@@ -28,7 +28,7 @@ namespace accelview_classes
         /// <summary>
         /// Y軸データ
         /// </summary>
-        public short Y
+        public int Y
         {
             get
             {
@@ -38,7 +38,7 @@ namespace accelview_classes
         /// <summary>
         /// Z軸データ
         /// </summary>
-        public short Z
+        public int Z
         {
             get
             {
@@ -62,7 +62,7 @@ namespace accelview_classes
         /// <param name="x">x軸</param>
         /// <param name="y">y軸</param>
         /// <param name="z">z軸</param>
-        public XYZData(short x, short y, short z)
+        public XYZData(int x, int y, int z)
         {
             this.x = x;
             this.y = y;
@@ -76,7 +76,7 @@ namespace accelview_classes
         /// </summary>
         /// <param name="num">0ならx軸、1ならy軸、2ならz軸の値</param>
         /// <returns></returns>
-        public short ReturnByNumber(int num)
+        public int ReturnByNumber(int num)
         {
             switch (num)
             {
