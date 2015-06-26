@@ -10,4 +10,9 @@ namespace accelview_classes
     {
         accel,gyro,both
     }
+    public enum SensorNuber
+    {
+        WAA010,
+        TSND121
+    }
 }
