@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Drawing;
 
 
-namespace accelview_classes
+namespace accelerometer
 {
     /// <summary>
     /// 統計計算をする静的クラス

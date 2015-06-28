@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "accelview_classes", "accelview_classes\accelview_classes.csproj", "{B28CEC2A-CE47-4008-BCC0-5DF5A7806610}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5D525481-2008-4082-9CBF-F10A458F84F2} = {5D525481-2008-4082-9CBF-F10A458F84F2}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accelerometer", "Accelerometer\Accelerometer.csproj", "{5D525481-2008-4082-9CBF-F10A458F84F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{B28CEC2A-CE47-4008-BCC0-5DF5A7806610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B28CEC2A-CE47-4008-BCC0-5DF5A7806610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B28CEC2A-CE47-4008-BCC0-5DF5A7806610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D525481-2008-4082-9CBF-F10A458F84F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D525481-2008-4082-9CBF-F10A458F84F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D525481-2008-4082-9CBF-F10A458F84F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D525481-2008-4082-9CBF-F10A458F84F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

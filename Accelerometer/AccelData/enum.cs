@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace accelview_classes
+namespace accelerometer
 {
     public enum dataType
     {

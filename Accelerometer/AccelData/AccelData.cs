@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace accelview_classes
+namespace accelerometer
 {
     /// <summary>
     /// 加速度データとジャイロデータを持つクラス

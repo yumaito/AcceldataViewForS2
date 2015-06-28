@@ -1,0 +1,5 @@
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\Accelerometer\bin\Debug\Accelerometer.dll
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\Accelerometer\bin\Debug\Accelerometer.pdb
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\Accelerometer\obj\Debug\Accelerometer.csprojResolveAssemblyReference.cache
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\Accelerometer\obj\Debug\Accelerometer.dll
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\Accelerometer\obj\Debug\Accelerometer.pdb
