@@ -48,11 +48,6 @@ using accelerometer;
 ```csharp
 delegate void setfocus();
 ```
-シリアル通信のエンコードを指定しておきます（デフォルトのままでも大丈夫だけど、念のために明示）
-
-```csharp
-serialPort1.Encoding = SensorData.Encoding;
-```
 
 シリアル通信の受信イベントの箇所に以下を追加します
 
