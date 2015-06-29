@@ -106,6 +106,7 @@ namespace accelview_classes
             BeginInvoke((setfocus)delegate()
             {
                 string r = serialPort1.ReadExisting();
+                //stringで取得されたデータをbyteに変換するような処理を書く
                 //sensorData.pushDataBuffer()
                 //テキストボックスを加速度の値で埋めるメソッド
                 this.TextFill(this.sensorData.LastData);
