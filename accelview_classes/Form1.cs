@@ -137,7 +137,7 @@ namespace accelview_classes
         {
             this.Cursor = Cursors.WaitCursor;
             toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
-            string cmd = "agb +000000000 5 1 0";//waa-010
+            string cmd = "agb +000000000 5 4 0";//waa-010
             //以下の関数で作成することも可能
             //cmd = SensorConfig.MakeCommand(dataType.both, SensorVer.WAA010, 5, 4);
             //cmd = "0x9a 0x16"
