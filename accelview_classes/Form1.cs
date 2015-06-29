@@ -106,7 +106,7 @@ namespace accelview_classes
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             
-            BeginInvoke((setfocus)delegate()
+            Invoke((setfocus)delegate()
             {
                 byte[] buffer = new byte[serialPort1.ReadBufferSize];
                 //string r = serialPort1.ReadExisting();
@@ -136,7 +136,7 @@ namespace accelview_classes
         private void SerialOpen()
         {
             toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
-            string cmd = "agb +000000000 5 2 0 \n";
+            string cmd = "agb +000000000 5 1 0 \n";
             if (!serialPort1.IsOpen)
             {
                 //dataTypeを受け取るデータによって変える
@@ -369,15 +369,16 @@ namespace accelview_classes
                 //labelConnect.Text = "未接続";
                 if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Encoding enc = Encoding.GetEncoding("Shift_JIS");
+                    Encoding enc = Encoding.UTF8;
                     //
-                    using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, enc))
-                    {
-                        for (int i = 0; i < sensorData.AllData.Count; i++)
-                        {
-                            sw.WriteLine(sensorData.AllData[i].CSVFormat(sensorData.AllData[0].D));
-                        }
-                    }
+                    this.sensorData.saveData(saveFileDialog1.FileName, enc, true);
+                    //using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, enc))
+                    //{
+                    //    //for (int i = 0; i < sensorData.AllData.Count; i++)
+                    //    //{
+                    //    //    sw.WriteLine(sensorData.AllData[i].CSVFormat(sensorData.AllData[0].D));
+                    //    //}
+                    //}
                 }
             }
         }

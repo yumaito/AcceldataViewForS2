@@ -128,27 +128,6 @@ namespace accelerometer
         #endregion
 
         #region 静的メソッド
-        private static byte[] Reverse(byte[] bytes, Endian endian)
-        {
-
-            if (BitConverter.IsLittleEndian ^ endian == Endian.Little)
-            {
-                //IsLittleEndianとendianの排他的論理和
-                //リトルエンディアンなら配列を反転
-                return bytes.Reverse().ToArray();
-            }
-            else
-            {
-                //ビッグエンディアンならそのまま
-                return bytes;
-            }
-        }
-        private static byte[] GetSubArray(byte[] src, int startIndex, int count)
-        {
-            byte[] dst = new byte[count];
-            Array.Copy(src, startIndex, dst, 0, src.Length);
-            return dst;
-        }
         public static int ToInt32(byte[] value, Endian endian)
         {
             switch(endian)
@@ -165,6 +144,18 @@ namespace accelerometer
             //byte[] sub = GetSubArray(value, startIndex, sizeof(int));
             //byte[] resultArray = SensorConfig.Reverse(sub, endian);
             //return BitConverter.ToInt32(resultArray, 0);
+        }
+        public static int GetTime(byte[] value, Endian endian)
+        {
+            switch(endian)
+            {
+                case Endian.Big:
+                    return (int)(value[0] << 24 | value[1] << 16 | value[2] << 8 | value[3]);
+                case Endian.Little:
+                    return (int)(value[3] << 24 | value[2] << 16 | value[1] << 8 | value[0]);
+                default:
+                    return 0;
+            }
         }
         #endregion
     }

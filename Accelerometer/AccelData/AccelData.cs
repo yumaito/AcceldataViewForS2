@@ -52,6 +52,9 @@ namespace accelerometer
                 return gyro;
             }
         }
+        /// <summary>
+        /// データタイプ
+        /// </summary>
         public dataType D
         {
             get
@@ -167,16 +170,16 @@ namespace accelerometer
             switch (d)
             {
                 case dataType.both:
-                    this.CreateTime(temp.GetRange(3, 4).ToArray());
+                    this.CreateTime(temp.GetRange(3, 4).ToArray(), endian);
                     this.accel = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian);
                     this.gyro = this.ReturnData(temp.GetRange(13, 6).ToArray(), endian);
                     break;
                 case dataType.accel:
-                    this.CreateTime(temp.GetRange(4, 4).ToArray());
+                    this.CreateTime(temp.GetRange(4, 4).ToArray(), endian);
                     this.accel = this.ReturnData(temp.GetRange(8, 6).ToArray(), endian);
                     break;
                 case dataType.gyro:
-                    this.CreateTime(temp.GetRange(3, 4).ToArray());
+                    this.CreateTime(temp.GetRange(3, 4).ToArray(), endian);
                     this.gyro = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian);
                     break;
             }
@@ -189,16 +192,18 @@ namespace accelerometer
         /// 時刻を生成する
         /// </summary>
         /// <param name="data"></param>
-        private void CreateTime(byte[] data)
+        /// <param name="endian">エンディアン</param>
+        private void CreateTime(byte[] data, Endian endian)
         {
-            this.time = (int)(data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3]);
+            this.time = SensorConfig.GetTime(data, endian);
         }
         /// <summary>
         /// byte型の配列からXYZData型のインスタンスを返すメソッド
         /// </summary>
         /// <param name="data">byte型の配列（6要素必要）</param>
+        /// <param name="endian">エンディアン</param>
         /// <returns></returns>
-        private XYZData ReturnData(byte[] data,Endian endian)
+        private XYZData ReturnData(byte[] data, Endian endian)
         {
             //一度リストに変換
             List<byte> temp = data.ToList();
