@@ -84,10 +84,11 @@ namespace accelerometer
         #region public
         public void SensorChange(SensorVer version)
         {
+            this.requiredDataNum = new Dictionary<dataType, int>();
+            this.fixedData = new Dictionary<dataType, byte[]>();
             switch (version)
             {
                 case SensorVer.WAA010:
-                    this.requiredDataNum = new Dictionary<dataType, int>();
                     #region 配列の個数
                     requiredDataNum.Add(dataType.accel, 15);
                     requiredDataNum.Add(dataType.both, 20);
@@ -103,15 +104,18 @@ namespace accelerometer
                     break;
             }
         }
+        
         /// <summary>
         /// シリアルポートからのデータを受け取りデータバッファに溜める
-        /// もし加速度データに変更できるだけの量が溜まれば加速度データに変換後、該当データは破棄
+        /// もし、加速度データに変更できるだけの量が溜まれば加速度データに変換後、該当データは破棄
         /// </summary>
         /// <param name="data"></param>
-        public void pushDataBuffer(byte data)
+        public void pushDataBuffer(byte[] data)
         {
-            this.dataBuffer.Add(data);
-            this.checkData(this.dataBuffer);
+            foreach(byte d in data)
+            {
+                this.pushDataBuffer(d);
+            }
         }
         /// <summary>
         /// SensorDataにAccelDataを追加するメソッド
@@ -188,6 +192,16 @@ namespace accelerometer
         }
         #endregion
         #region private
+        /// <summary>
+        /// シリアルポートからのデータを受け取りデータバッファに溜める
+        /// もし加速度データに変更できるだけの量が溜まれば加速度データに変換後、該当データは破棄
+        /// </summary>
+        /// <param name="data"></param>
+        private void pushDataBuffer(byte data)
+        {
+            this.dataBuffer.Add(data);
+            this.checkData(this.dataBuffer);
+        }
         public bool checkData(List<byte> data)
         {
             bool result = true;

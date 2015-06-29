@@ -90,48 +90,48 @@ namespace accelerometer
                     break;
             }
 
-            if (d == dataType.both)
-            {
-                if (byteData.Length != 25)
-                {
-                    throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
-                }
-                //時間を作成
-                this.time = (short)(byteData[3] << 24 | byteData[4] << 16 | byteData[5] << 8 | byteData[6]);
-                //byteData配列から7～12の要素を抽出-----
-                byte[] data = new byte[6];
-                int typeSize = System.Runtime.InteropServices.Marshal.SizeOf(byteData.GetType().GetElementType());
-                Buffer.BlockCopy(byteData, 7 * typeSize, data, 0, 6 * typeSize);
-                //--------
-                //自クラスのメソッド呼び出し--------
-                this.accel = this.ReturnData(data);
-                //13～18の要素を抽出-----
-                data = new byte[6];//初期化
-                typeSize = System.Runtime.InteropServices.Marshal.SizeOf(byteData.GetType().GetElementType());
-                Buffer.BlockCopy(byteData, 13 * typeSize, data, 0, 6 * typeSize);
-                //-------
-                //自クラスのメソッド呼び出し
-                this.gyro = this.ReturnData(data);
-            }
-            else if (d == dataType.accel)
-            {
-                if (byteData.Length != 25)
-                {
-                    throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
-                }
-                //
-                this.time = (short)(byteData[4] << 24 | byteData[5] << 16 | byteData[6] << 8 | byteData[7]);
-                byte[] data = new byte[6];
-                int typeSize = System.Runtime.InteropServices.Marshal.SizeOf(byteData.GetType().GetElementType());
-                Buffer.BlockCopy(byteData, 8 * typeSize, data, 0, 6 * typeSize);
-                //
-                this.accel = this.ReturnData(data);
+            //if (d == dataType.both)
+            //{
+            //    if (byteData.Length != 25)
+            //    {
+            //        throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
+            //    }
+            //    //時間を作成
+            //    this.time = (short)(byteData[3] << 24 | byteData[4] << 16 | byteData[5] << 8 | byteData[6]);
+            //    //byteData配列から7～12の要素を抽出-----
+            //    byte[] data = new byte[6];
+            //    int typeSize = System.Runtime.InteropServices.Marshal.SizeOf(byteData.GetType().GetElementType());
+            //    Buffer.BlockCopy(byteData, 7 * typeSize, data, 0, 6 * typeSize);
+            //    //--------
+            //    //自クラスのメソッド呼び出し--------
+            //    this.accel = this.ReturnData(data);
+            //    //13～18の要素を抽出-----
+            //    data = new byte[6];//初期化
+            //    typeSize = System.Runtime.InteropServices.Marshal.SizeOf(byteData.GetType().GetElementType());
+            //    Buffer.BlockCopy(byteData, 13 * typeSize, data, 0, 6 * typeSize);
+            //    //-------
+            //    //自クラスのメソッド呼び出し
+            //    this.gyro = this.ReturnData(data);
+            //}
+            //else if (d == dataType.accel)
+            //{
+            //    if (byteData.Length != 25)
+            //    {
+            //        throw new ArgumentException("byteData型配列の要素数は20個でなければなりません。");
+            //    }
+            //    //
+            //    this.time = (short)(byteData[4] << 24 | byteData[5] << 16 | byteData[6] << 8 | byteData[7]);
+            //    byte[] data = new byte[6];
+            //    int typeSize = System.Runtime.InteropServices.Marshal.SizeOf(byteData.GetType().GetElementType());
+            //    Buffer.BlockCopy(byteData, 8 * typeSize, data, 0, 6 * typeSize);
+            //    //
+            //    this.accel = this.ReturnData(data);
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-            }
+            //}
 
         }
         

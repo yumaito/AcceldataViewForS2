@@ -83,6 +83,8 @@ namespace accelview_classes
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //
             toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
+            //シリアル通信のエンコード設定
+            serialPort1.Encoding = Encoding.ASCII;
         }
         //画面の表示を初期化する
         private void Clear()
@@ -107,7 +109,8 @@ namespace accelview_classes
             {
                 string r = serialPort1.ReadExisting();
                 //stringで取得されたデータをbyteに変換するような処理を書く
-                //sensorData.pushDataBuffer()
+                byte[] temp = Encoding.ASCII.GetBytes(r);
+                sensorData.pushDataBuffer(temp);
                 //テキストボックスを加速度の値で埋めるメソッド
                 this.TextFill(this.sensorData.LastData);
                 //
@@ -191,6 +194,8 @@ namespace accelview_classes
             string cmd = "agb +000000000 5 4 0 \n";
             if (!serialPort1.IsOpen)
             {
+                //dataTypeを受け取るデータによって変える
+                //加速度データと角速度データ両方ならdataType.both,加速度データのみならdataType.accel,角速度データのみならdataType.gyro
                 this.sensorData = new SensorData(dataType.both, (SensorVer)toolStripComboBoxVersion.SelectedIndex);
                 //シリアルポートが開いていないなら
                 serialPort1.Close();
