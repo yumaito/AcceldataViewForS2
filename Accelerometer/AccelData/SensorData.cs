@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace accelerometer
 {
@@ -187,6 +188,39 @@ namespace accelerometer
                 {
                     //Console.WriteLine("exrtact Data");
                     return this.ExtractData(0, tail);
+                }
+            }
+        }
+        /// <summary>
+        /// たまっているデータをcsvファイルとして保存する
+        /// </summary>
+        /// <param name="path">保存先のパス</param>
+        /// <param name="enc">エンコード</param>
+        /// <param name="isHeader">ヘッダーを入れるかどうか</param>
+        public void saveData(string path, Encoding enc, bool isHeader)
+        {
+            using (StreamWriter sw = new StreamWriter(path, false, enc))
+            {
+                if (isHeader)
+                {
+                    switch (this.currentType)
+                    {
+                        case dataType.both:
+                            sw.WriteLine("time,ax,ay,az,gx,gy,gz");
+                            break;
+                        case dataType.accel:
+                            sw.WriteLine("time,ax,ay,az");
+                            break;
+                        case dataType.gyro:
+                            sw.WriteLine("time,gx,gy,gz");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                foreach (AccelData data in this.allData)
+                {
+                    sw.WriteLine(data.CSVFormat(this.currentType));
                 }
             }
         }

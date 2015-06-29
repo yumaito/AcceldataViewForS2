@@ -218,14 +218,25 @@ namespace accelerometer
         /// <returns></returns>
         public string CSVFormat(dataType d)
         {
-            if (d == dataType.both)
+            switch(d)
             {
-                return this.time + "," + this.accel.CSVFormat() + "," + this.gyro.CSVFormat();
+                case dataType.both:
+                    return this.time + "," + this.accel.CSVFormat() + "," + this.gyro.CSVFormat();
+                case dataType.accel:
+                    return this.time + "," + this.accel.CSVFormat();
+                case dataType.gyro:
+                    return this.time + "," + this.gyro.CSVFormat();
+                default:
+                    return "";
             }
-            else
-            {
-                return this.time + "," + this.accel.CSVFormat();
-            }
+            //if (d == dataType.both)
+            //{
+            //    return this.time + "," + this.accel.CSVFormat() + "," + this.gyro.CSVFormat();
+            //}
+            //else
+            //{
+            //    return this.time + "," + this.accel.CSVFormat();
+            //}
 
         }
         #endregion
