@@ -279,22 +279,12 @@ namespace accelerometer
             this.dataBuffer.Add(data);
             this.checkData();
         }
-        public bool checkData()
+        private bool checkData()
         {
             int num = this.sensConfig.RequiredDataNum[this.currentType];
             while (this.dataBuffer.Count >= num)
             {
-                //int num2 = this.sensConfig.FixedData[this.currentType].Length;
-                //for (int i = 0; i < num2; i++)
-                //{
-                //    if (this.dataBuffer[i] != this.sensConfig.FixedData[this.currentType][i])
-                //    {
-                //        //result = false;
-                //        //先頭の文字が1つでも異なればその位置までの要素を破棄
-                //        this.dataBuffer.RemoveRange(0, i + 1);
-                //        //break;
-                //    }
-                //}
+                //dataBufferの数が最低必要数を上回っている限り
                 int n = 0;
                 if (this.checkHead(this.dataBuffer.ToArray(), out n))
                 {
@@ -309,35 +299,6 @@ namespace accelerometer
                 }
             }
             return false;
-            //bool result = true;
-            //データ数が一定個以下ならfalseを返す
-            //if (data.Count <= this.sensConfig.RequiredDataNum[this.currentType])
-            //{
-            //    //result = false;
-            //    return false;
-            //}
-            //else
-            //{
-            //    //int num = this.sensConfig.RequiredDataNum[this.currentType];
-            //    int num2 = this.sensConfig.FixedData[this.currentType].Length;
-            //    for (int i = 0; i < num2; i++)
-            //    {
-            //        if (data[i] != this.sensConfig.FixedData[this.currentType][i])
-            //        {
-            //            //result = false;
-            //            data.RemoveRange(0, i + 1);
-            //            return false;
-            //        }
-            //    }
-            //    //先頭バイトが合致していればデータに変換して先頭を消去
-
-            //    List<byte> temp = data.GetRange(0, num);
-            //    this.pushData(new AccelData(temp.ToArray(), this.currentType, this.sensConfig));
-            //    data.RemoveRange(0, num);
-
-            //    return true;
-            //}
-            //return result;
         }
         private bool checkHead(byte[] bytes, out int num)
         {

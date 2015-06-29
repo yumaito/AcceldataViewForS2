@@ -128,6 +128,12 @@ namespace accelerometer
         #endregion
 
         #region 静的メソッド
+        /// <summary>
+        /// 指定したエンディアンでデータを作成
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="endian"></param>
+        /// <returns></returns>
         public static int ToInt32(byte[] value, Endian endian)
         {
             switch(endian)
@@ -145,6 +151,12 @@ namespace accelerometer
             //byte[] resultArray = SensorConfig.Reverse(sub, endian);
             //return BitConverter.ToInt32(resultArray, 0);
         }
+        /// <summary>
+        /// 指定したエンディアンで時刻データを作成
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="endian"></param>
+        /// <returns></returns>
         public static int GetTime(byte[] value, Endian endian)
         {
             switch(endian)
@@ -156,6 +168,36 @@ namespace accelerometer
                 default:
                     return 0;
             }
+        }
+
+        public static string MakeCommand(dataType d, SensorVer sensor, int sampling, int ave)
+        {
+            string header = "";
+            switch(sensor)
+            {
+                case SensorVer.WAA010:
+                    switch(d)
+                    {
+                        case dataType.both:
+                            header = "agb +000000000 ";
+                            break;
+                        case dataType.accel:
+                            header = "senb +000000000 ";
+                            break;
+                        case dataType.gyro:
+                            header = "gyb +000000000 ";
+                            break;
+                        default:
+                            break;
+                    }
+                    header += sampling.ToString() + " " + ave.ToString() + " 0";
+                    break;
+                case SensorVer.TSND121:
+                    break;
+                default:
+                    break;
+            }
+            return header;
         }
         #endregion
     }

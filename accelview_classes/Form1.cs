@@ -136,7 +136,10 @@ namespace accelview_classes
         private void SerialOpen()
         {
             toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
-            string cmd = "agb +000000000 5 4 0 \n";
+            string cmd = "agb +000000000 5 4 0";//waa-010
+            //以下の関数で作成することも可能
+            //cmd = SensorConfig.MakeCommand(dataType.both, SensorVer.WAA010, 5, 4);
+            //cmd = "0x9a 0x16"
             if (!serialPort1.IsOpen)
             {
                 //dataTypeを受け取るデータによって変える
@@ -148,7 +151,7 @@ namespace accelview_classes
                 serialPort1.Open();
                 toolStripStatusLabelConnectCondition.Text = "接続状態：接続";
                 //加速度と角速度をstopされるまで出力する
-                serialPort1.Write(cmd);
+                serialPort1.WriteLine(cmd);
             }
             else
             {

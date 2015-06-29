@@ -130,6 +130,22 @@
             </summary>
             <param name="version"></param>
         </member>
+        <member name="M:accelerometer.SensorConfig.ToInt32(System.Byte[],accelerometer.Endian)">
+            <summary>
+            指定したエンディアンでデータを作成
+            </summary>
+            <param name="value"></param>
+            <param name="endian"></param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.SensorConfig.GetTime(System.Byte[],accelerometer.Endian)">
+            <summary>
+            指定したエンディアンで時刻データを作成
+            </summary>
+            <param name="value"></param>
+            <param name="endian"></param>
+            <returns></returns>
+        </member>
         <member name="P:accelerometer.SensorConfig.RequiredDataNum">
             <summary>
             データを形成するのに必要なバイト配列の要素数
