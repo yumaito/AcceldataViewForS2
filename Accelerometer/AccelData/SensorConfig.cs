@@ -124,5 +124,31 @@ namespace accelerometer
             }
         }
         #endregion
+
+        #region 静的メソッド
+        private static byte[] Reverse(byte[] bytes, Endian endian)
+        {
+            if(BitConverter.IsLittleEndian ^ endian == Endian.Little)
+            {
+                //IsLittleEndianとendianの排他的論理和
+                return bytes.Reverse().ToArray();
+            }
+            else
+            {
+                return bytes;
+            }
+        }
+        private static byte[] GetSubArray(byte[] src, int startIndex, int count)
+        {
+            byte[] dst = new byte[count];
+            Array.Copy(src, startIndex, dst, 0, count);
+            return dst;
+        }
+        public static int ToInt32(byte[] value, int startIndex, Endian endian)
+        {
+            byte[] sub = GetSubArray(value, startIndex, sizeof(int));
+            return BitConverter.ToInt32(Reverse(sub, endian), 0);
+        }
+        #endregion
     }
 }
