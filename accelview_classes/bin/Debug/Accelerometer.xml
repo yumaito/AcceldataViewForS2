@@ -17,13 +17,13 @@
             <param name="accel">加速度</param>
             <param name="gyro">角速度</param>
         </member>
-        <member name="M:accelerometer.AccelData.#ctor(System.Byte[],accelerometer.dataType,accelerometer.SensorVer)">
+        <member name="M:accelerometer.AccelData.#ctor(System.Byte[],accelerometer.dataType,accelerometer.SensorConfig)">
             <summary>
             加速度データのインスタンス生成
             </summary>
             <param name="byteData">20個の要素からなるバイト型配列</param>
             <param name="d">データタイプ</param>
-            <param name="sensor">センサーのバージョン</param>
+            <param name="config">センサの設定情報</param>
         </member>
         <member name="M:accelerometer.AccelData.ReturnByNumber(System.Int32)">
             <summary>
@@ -38,7 +38,7 @@
             </summary>
             <param name="data"></param>
         </member>
-        <member name="M:accelerometer.AccelData.ReturnData(System.Byte[])">
+        <member name="M:accelerometer.AccelData.ReturnData(System.Byte[],accelerometer.Endian)">
             <summary>
             byte型の配列からXYZData型のインスタンスを返すメソッド
             </summary>

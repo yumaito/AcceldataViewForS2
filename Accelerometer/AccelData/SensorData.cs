@@ -18,7 +18,7 @@ namespace accelerometer
         private List<AccelData> allData;
         private List<byte> dataBuffer;
         //private int bufferindex;
-        private const int maximumData = 1000;
+        private const int maximumData = 10000;
         //センサの設定情報
         private SensorConfig sensConfig;
         #region 通信に必要な変数
@@ -88,7 +88,14 @@ namespace accelerometer
         {
             get
             {
-                return this.allData.Last();
+                if (this.allData.Count != 0)
+                {
+                    return this.allData.Last();
+                }
+                else
+                {
+                    return new AccelData(0, new XYZData(0, 0, 0), new XYZData(0, 0, 0));
+                }
             }
         }
         #endregion
@@ -270,38 +277,81 @@ namespace accelerometer
         private void pushDataBuffer(byte data)
         {
             this.dataBuffer.Add(data);
-            this.checkData(this.dataBuffer);
+            this.checkData();
         }
-        public bool checkData(List<byte> data)
+        public bool checkData()
         {
+            int num = this.sensConfig.RequiredDataNum[this.currentType];
+            while (this.dataBuffer.Count >= num)
+            {
+                //int num2 = this.sensConfig.FixedData[this.currentType].Length;
+                //for (int i = 0; i < num2; i++)
+                //{
+                //    if (this.dataBuffer[i] != this.sensConfig.FixedData[this.currentType][i])
+                //    {
+                //        //result = false;
+                //        //先頭の文字が1つでも異なればその位置までの要素を破棄
+                //        this.dataBuffer.RemoveRange(0, i + 1);
+                //        //break;
+                //    }
+                //}
+                int n = 0;
+                if (this.checkHead(this.dataBuffer.ToArray(), out n))
+                {
+                    //先頭バイトが合致していればデータに変換して先頭を消去
+                    List<byte> temp = this.dataBuffer.GetRange(0, num);
+                    this.pushData(new AccelData(temp.ToArray(), this.currentType, this.sensConfig));
+                    this.dataBuffer.RemoveRange(0, num);
+                }
+                else
+                {
+                    this.dataBuffer.RemoveRange(0, n + 1);
+                }
+            }
+            return false;
             //bool result = true;
             //データ数が一定個以下ならfalseを返す
-            if (data.Count <= this.sensConfig.RequiredDataNum[this.currentType])
-            {
-                //result = false;
-                return false;
-            }
-            else
-            {
-                int num = this.sensConfig.RequiredDataNum[this.currentType];
-                int num2 = this.sensConfig.FixedData[this.currentType].Length;
-                for (int i = 0; i < num2; i++)
-                {
-                    if (data[i] != this.sensConfig.FixedData[this.currentType][i])
-                    {
-                        //result = false;
-                        return false;
-                    }
-                }
-                //先頭バイトが合致していればデータに変換して先頭を消去
+            //if (data.Count <= this.sensConfig.RequiredDataNum[this.currentType])
+            //{
+            //    //result = false;
+            //    return false;
+            //}
+            //else
+            //{
+            //    //int num = this.sensConfig.RequiredDataNum[this.currentType];
+            //    int num2 = this.sensConfig.FixedData[this.currentType].Length;
+            //    for (int i = 0; i < num2; i++)
+            //    {
+            //        if (data[i] != this.sensConfig.FixedData[this.currentType][i])
+            //        {
+            //            //result = false;
+            //            data.RemoveRange(0, i + 1);
+            //            return false;
+            //        }
+            //    }
+            //    //先頭バイトが合致していればデータに変換して先頭を消去
 
-                List<byte> temp = data.GetRange(0, num);
-                this.pushData(new AccelData(temp.ToArray(), this.currentType, this.sensConfig.Version));
-                data.RemoveRange(0, num);
+            //    List<byte> temp = data.GetRange(0, num);
+            //    this.pushData(new AccelData(temp.ToArray(), this.currentType, this.sensConfig));
+            //    data.RemoveRange(0, num);
 
-                return true;
-            }
+            //    return true;
+            //}
             //return result;
+        }
+        private bool checkHead(byte[] bytes, out int num)
+        {
+            for (int i = 0; i < this.sensConfig.FixedData[this.currentType].Length; i++)
+            {
+                //num = i;
+                if(bytes[i] != this.sensConfig.FixedData[this.currentType][i])
+                {
+                    num = i;
+                    return false;
+                }
+            }
+            num = this.sensConfig.FixedData[this.currentType].Length - 1;
+            return true;
         }
         #endregion
         #endregion

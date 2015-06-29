@@ -92,6 +92,7 @@ namespace accelerometer
         }
         private void SetFixedData(SensorVer v)
         {
+            this.requiredDataNum = new Dictionary<dataType, int>();
             switch(v)
             {
                 case SensorVer.WAA010:
@@ -107,6 +108,7 @@ namespace accelerometer
         }
         private void SetRequiredNum(SensorVer v)
         {
+            this.fixedData = new Dictionary<dataType, byte[]>();
             switch(v)
             {
                 case SensorVer.WAA010:
@@ -128,26 +130,41 @@ namespace accelerometer
         #region 静的メソッド
         private static byte[] Reverse(byte[] bytes, Endian endian)
         {
-            if(BitConverter.IsLittleEndian ^ endian == Endian.Little)
+
+            if (BitConverter.IsLittleEndian ^ endian == Endian.Little)
             {
                 //IsLittleEndianとendianの排他的論理和
+                //リトルエンディアンなら配列を反転
                 return bytes.Reverse().ToArray();
             }
             else
             {
+                //ビッグエンディアンならそのまま
                 return bytes;
             }
         }
         private static byte[] GetSubArray(byte[] src, int startIndex, int count)
         {
             byte[] dst = new byte[count];
-            Array.Copy(src, startIndex, dst, 0, count);
+            Array.Copy(src, startIndex, dst, 0, src.Length);
             return dst;
         }
-        public static int ToInt32(byte[] value, int startIndex, Endian endian)
+        public static int ToInt32(byte[] value, Endian endian)
         {
-            byte[] sub = GetSubArray(value, startIndex, sizeof(int));
-            return BitConverter.ToInt32(Reverse(sub, endian), 0);
+            switch(endian)
+            {
+                case Endian.Big:
+                    short temp = (short)(value[0] << 8 | value[1]);
+                    return (int)(temp);
+                case Endian.Little:
+                    short temp2 = (short)(value[1] << 8 | value[0]);
+                    return (int)(temp2);
+                default:
+                    return 0;
+            }
+            //byte[] sub = GetSubArray(value, startIndex, sizeof(int));
+            //byte[] resultArray = SensorConfig.Reverse(sub, endian);
+            //return BitConverter.ToInt32(resultArray, 0);
         }
         #endregion
     }

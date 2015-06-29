@@ -79,16 +79,16 @@ namespace accelerometer
         /// </summary>
         /// <param name="byteData">20個の要素からなるバイト型配列</param>
         /// <param name="d">データタイプ</param>
-        /// <param name="sensor">センサーのバージョン</param>
-        public AccelData(byte[] byteData, dataType d, SensorVer sensor)
+        /// <param name="config">センサの設定情報</param>
+        public AccelData(byte[] byteData, dataType d, SensorConfig config)
         {
-            switch(sensor)
+            switch(config.Version)
             {
                 case SensorVer.WAA010:
-                    this.CreateDataFor010(d, byteData);
+                    this.CreateDataFor010(d, byteData, config.Endian);
                     break;
                 case SensorVer.TSND121:
-                    this.CreateDataFor121(d, byteData);
+                    this.CreateDataFor121(d, byteData, config.Endian);
                     break;
             }
 
@@ -160,28 +160,28 @@ namespace accelerometer
                 return this.accel.X;
             }
         }
-        private void CreateDataFor010(dataType d, byte[] data)
+        private void CreateDataFor010(dataType d, byte[] data, Endian endian)
         {
             //リストに変換（抽出がやりやすいので）
             List<byte> temp = data.ToList();
-            switch(d)
+            switch (d)
             {
                 case dataType.both:
                     this.CreateTime(temp.GetRange(3, 4).ToArray());
-                    this.accel = this.ReturnData(temp.GetRange(7, 6).ToArray());
-                    this.gyro = this.ReturnData(temp.GetRange(13, 6).ToArray());
+                    this.accel = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian);
+                    this.gyro = this.ReturnData(temp.GetRange(13, 6).ToArray(), endian);
                     break;
                 case dataType.accel:
                     this.CreateTime(temp.GetRange(4, 4).ToArray());
-                    this.accel = this.ReturnData(temp.GetRange(8, 6).ToArray());
+                    this.accel = this.ReturnData(temp.GetRange(8, 6).ToArray(), endian);
                     break;
                 case dataType.gyro:
                     this.CreateTime(temp.GetRange(3, 4).ToArray());
-                    this.gyro = this.ReturnData(temp.GetRange(7, 6).ToArray());
+                    this.gyro = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian);
                     break;
             }
         }
-        private void CreateDataFor121(dataType d, byte[] data)
+        private void CreateDataFor121(dataType d, byte[] data, Endian endian)
         {
 
         }
@@ -198,13 +198,14 @@ namespace accelerometer
         /// </summary>
         /// <param name="data">byte型の配列（6要素必要）</param>
         /// <returns></returns>
-        private XYZData ReturnData(byte[] data)
+        private XYZData ReturnData(byte[] data,Endian endian)
         {
             //一度リストに変換
             List<byte> temp = data.ToList();
-            int x = BitConverter.ToInt32(temp.GetRange(0, 2).ToArray(), 0);
-            int y = BitConverter.ToInt32(temp.GetRange(2, 2).ToArray(), 0);
-            int z = BitConverter.ToInt32(temp.GetRange(4, 2).ToArray(), 0);
+            byte[] t = temp.GetRange(0, 2).ToArray();
+            int x = SensorConfig.ToInt32(temp.GetRange(0, 2).ToArray(), endian);
+            int y = SensorConfig.ToInt32(temp.GetRange(2, 2).ToArray(), endian);
+            int z = SensorConfig.ToInt32(temp.GetRange(4, 2).ToArray(), endian);
             //int x = (int)(data[0] << 8 | data[1]);
             //int y = (int)(data[2] << 8 | data[3]);
             //int z = (int)(data[4] << 8 | data[5]);

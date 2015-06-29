@@ -105,12 +105,15 @@ namespace accelview_classes
         //変換してたまったデータを破棄
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            
             BeginInvoke((setfocus)delegate()
             {
-                string r = serialPort1.ReadExisting();
+                byte[] buffer = new byte[serialPort1.ReadBufferSize];
+                //string r = serialPort1.ReadExisting();
                 //stringで取得されたデータをbyteに変換するような処理を書く
-                byte[] temp = SensorData.Encoding.GetBytes(r);
-                sensorData.pushDataBuffer(temp);
+                //byte[] temp = SensorData.Encoding.GetBytes(r);
+                int t = serialPort1.Read(buffer, 0, buffer.Length);
+                sensorData.pushDataBuffer(buffer);
                 //テキストボックスを加速度の値で埋めるメソッド
                 this.TextFill(this.sensorData.LastData);
                 //
@@ -119,7 +122,7 @@ namespace accelview_classes
                 pictureBox1.Invalidate();
             });
             //labelReceived.Text = "Received Data="+serialPort1.ReadByte
-            byte[] readdata = new byte[15];
+            //byte[] readdata = new byte[15];
             #region データチェック
             //while (serialPort1.BytesToRead > 4)
             //{
@@ -198,7 +201,7 @@ namespace accelview_classes
                 //加速度データと角速度データ両方ならdataType.both,加速度データのみならdataType.accel,角速度データのみならdataType.gyro
                 this.sensorData = new SensorData(dataType.both, (SensorVer)toolStripComboBoxVersion.SelectedIndex);
                 //シリアルポートが開いていないなら
-                serialPort1.Close();
+                //serialPort1.Close();
                 serialPort1.PortName = toolStripComboBoxCOM.SelectedItem.ToString();
                 serialPort1.Open();
                 toolStripStatusLabelConnectCondition.Text = "接続状態：接続";
@@ -245,9 +248,9 @@ namespace accelview_classes
             textBoxY.Text = data.Accel.Y.ToString();
             textBoxZ.Text = data.Accel.Z.ToString();
             toolStripStatusLabel1.Text = this.sensorData.AllData.Count.ToString();
-            //textBoxGX.Text = data.Gyro.X.ToString();
-            //textBoxGY.Text = data.Gyro.Y.ToString();
-            //textBoxGZ.Text = data.Gyro.Z.ToString();
+            textBoxGX.Text = data.Gyro.X.ToString();
+            textBoxGY.Text = data.Gyro.Y.ToString();
+            textBoxGZ.Text = data.Gyro.Z.ToString();
         }
         private void DrawGraphs(Graphics g)
         {
