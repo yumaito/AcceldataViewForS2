@@ -78,6 +78,8 @@ namespace accelerometer
         /// 加速度データのインスタンス生成
         /// </summary>
         /// <param name="byteData">20個の要素からなるバイト型配列</param>
+        /// <param name="d">データタイプ</param>
+        /// <param name="sensor">センサーのバージョン</param>
         public AccelData(byte[] byteData, dataType d, SensorVer sensor)
         {
             switch(sensor)
@@ -198,9 +200,14 @@ namespace accelerometer
         /// <returns></returns>
         private XYZData ReturnData(byte[] data)
         {
-            int x = (int)(data[0] << 8 | data[1]);
-            int y = (int)(data[2] << 8 | data[3]);
-            int z = (int)(data[4] << 8 | data[5]);
+            //一度リストに変換
+            List<byte> temp = data.ToList();
+            int x = BitConverter.ToInt32(temp.GetRange(0, 2).ToArray(), 0);
+            int y = BitConverter.ToInt32(temp.GetRange(2, 2).ToArray(), 0);
+            int z = BitConverter.ToInt32(temp.GetRange(4, 2).ToArray(), 0);
+            //int x = (int)(data[0] << 8 | data[1]);
+            //int y = (int)(data[2] << 8 | data[3]);
+            //int z = (int)(data[4] << 8 | data[5]);
             return new XYZData(x, y, z);
         }
         /// <summary>

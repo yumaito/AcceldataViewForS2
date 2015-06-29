@@ -14,40 +14,66 @@ namespace accelerometer
     {
         #region メンバ変数
         private dataType currentType;
-        private SensorVer version;
+        //private SensorVer version;
         private List<AccelData> allData;
         private List<byte> dataBuffer;
-        private int bufferindex;
+        //private int bufferindex;
         private const int maximumData = 1000;
+        //センサの設定情報
+        private SensorConfig sensConfig;
         #region 通信に必要な変数
-        private Dictionary<dataType, int> requiredDataNum;
-        private Dictionary<dataType, byte[]> fixedData;
+        //private Dictionary<dataType, int> requiredDataNum;
+        //private Dictionary<dataType, byte[]> fixedData;
+        #region static
+        private static Encoding encoding = Encoding.ASCII;
+        #endregion
         #endregion
         #endregion
 
         #region プロパティ
         #region 静的変数
         /// <summary>
-        /// 得るデータと受け取るデータの先頭固定バイト
+        /// エンコーディング
         /// </summary>
-        public Dictionary<dataType, byte[]> FixedData
+        public static Encoding Encoding
         {
             get
             {
-                return this.fixedData;
-            }
-        }
-        /// <summary>
-        /// 得るデータと配列の個数の関係
-        /// </summary>
-        public Dictionary<dataType,int> RequiredDataNum
-        {
-            get
-            {
-                return this.requiredDataNum;
+                return SensorData.encoding;
             }
         }
         #endregion
+        /// <summary>
+        /// センサの設定情報
+        /// </summary>
+        public SensorConfig Config
+        {
+            get
+            {
+                return this.sensConfig;
+            }
+        }
+        ///// <summary>
+        ///// 得るデータと受け取るデータの先頭固定バイト
+        ///// </summary>
+        //public Dictionary<dataType, byte[]> FixedData
+        //{
+        //    get
+        //    {
+        //        return this.fixedData;
+        //    }
+        //}
+        ///// <summary>
+        ///// 得るデータと配列の個数の関係
+        ///// </summary>
+        //public Dictionary<dataType,int> RequiredDataNum
+        //{
+        //    get
+        //    {
+        //        return this.requiredDataNum;
+        //    }
+        //}
+        
         public List<AccelData> AllData
         {
             get
@@ -69,11 +95,18 @@ namespace accelerometer
 
 
         #region コンストラクタ
+        /// <summary>
+        /// センサデータを管理するクラス
+        /// </summary>
+        /// <param name="type">データタイプ（加速度のみ、角速度のみ、両方）</param>
+        /// <param name="version">センサの型番</param>
         public SensorData(dataType type, SensorVer version)
         {
             this.currentType = type;
-            this.version = version;
-            this.SensorChange(version);
+            //this.version = version;
+            //this.SensorChange(version);
+            //センサの設定情報
+            this.sensConfig = new SensorConfig(version);
             //allDataの初期化（必ず必要）
             this.allData = new List<AccelData>();
             //bufferの初期化
@@ -83,28 +116,31 @@ namespace accelerometer
 
         #region メソッド
         #region public
-        public void SensorChange(SensorVer version)
-        {
-            this.requiredDataNum = new Dictionary<dataType, int>();
-            this.fixedData = new Dictionary<dataType, byte[]>();
-            switch (version)
-            {
-                case SensorVer.WAA010:
-                    #region 配列の個数
-                    requiredDataNum.Add(dataType.accel, 15);
-                    requiredDataNum.Add(dataType.both, 20);
-                    requiredDataNum.Add(dataType.gyro, 15);
-                    #endregion
-                    #region
-                    fixedData.Add(dataType.both, new byte[] { 0x61, 0x67, 0x62 });//agb
-                    fixedData.Add(dataType.accel, new byte[] { 0x73, 0x65, 0x6E, 0x62 });//senb
-                    fixedData.Add(dataType.gyro, new byte[] { 0x67, 0x79, 0x62 });//gyb
-                    #endregion
-                    break;
-                case SensorVer.TSND121:
-                    break;
-            }
-        }
+        //public void SensorChange(SensorVer version)
+        //{
+        //    this.requiredDataNum = new Dictionary<dataType, int>();
+        //    this.fixedData = new Dictionary<dataType, byte[]>();
+        //    switch (version)
+        //    {
+        //        case SensorVer.WAA010:
+        //            #region 配列の個数
+        //            requiredDataNum.Add(dataType.accel, 15);
+        //            requiredDataNum.Add(dataType.both, 20);
+        //            requiredDataNum.Add(dataType.gyro, 15);
+        //            #endregion
+        //            #region
+        //            byte[] agb = SensorData.Encoding.GetBytes("agb");
+        //            byte[] senb = SensorData.Encoding.GetBytes("senb");
+        //            byte[] gyb = SensorData.Encoding.GetBytes("gyb");
+        //            fixedData.Add(dataType.both, agb);//agb
+        //            fixedData.Add(dataType.accel, senb);//senb
+        //            fixedData.Add(dataType.gyro, gyb);//gyb
+        //            #endregion
+        //            break;
+        //        case SensorVer.TSND121:
+        //            break;
+        //    }
+        //}
         
         /// <summary>
         /// シリアルポートからのデータを受け取りデータバッファに溜める
@@ -238,32 +274,34 @@ namespace accelerometer
         }
         public bool checkData(List<byte> data)
         {
-            bool result = true;
+            //bool result = true;
             //データ数が一定個以下ならfalseを返す
-            if (data.Count <= this.requiredDataNum[this.currentType])
+            if (data.Count <= this.sensConfig.RequiredDataNum[this.currentType])
             {
-                result = false;
+                //result = false;
+                return false;
             }
             else
             {
-                int num = this.requiredDataNum[this.currentType];
-                int num2 = this.fixedData[this.currentType].Length;
+                int num = this.sensConfig.RequiredDataNum[this.currentType];
+                int num2 = this.sensConfig.FixedData[this.currentType].Length;
                 for (int i = 0; i < num2; i++)
                 {
-                    if(data[i] != this.fixedData[this.currentType][i])
+                    if (data[i] != this.sensConfig.FixedData[this.currentType][i])
                     {
-                        result = false;
+                        //result = false;
+                        return false;
                     }
                 }
                 //先頭バイトが合致していればデータに変換して先頭を消去
-                if(result)
-                {
-                    List<byte> temp = data.GetRange(0, num);
-                    this.pushData(new AccelData(temp.ToArray(), this.currentType, this.version));
-                    data.RemoveRange(0, num);
-                }
+
+                List<byte> temp = data.GetRange(0, num);
+                this.pushData(new AccelData(temp.ToArray(), this.currentType, this.sensConfig.Version));
+                data.RemoveRange(0, num);
+
+                return true;
             }
-            return result;
+            //return result;
         }
         #endregion
         #endregion

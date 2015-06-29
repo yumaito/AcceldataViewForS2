@@ -22,6 +22,8 @@
             加速度データのインスタンス生成
             </summary>
             <param name="byteData">20個の要素からなるバイト型配列</param>
+            <param name="d">データタイプ</param>
+            <param name="sensor">センサーのバージョン</param>
         </member>
         <member name="M:accelerometer.AccelData.ReturnByNumber(System.Int32)">
             <summary>
@@ -70,10 +72,88 @@
             ジャイロ
             </summary>
         </member>
+        <member name="T:accelerometer.dataType">
+            <summary>
+            取得するデータのタイプ
+            </summary>
+        </member>
+        <member name="F:accelerometer.dataType.accel">
+            <summary>
+            加速度データのみ
+            </summary>
+        </member>
+        <member name="F:accelerometer.dataType.gyro">
+            <summary>
+            角速度データのみ
+            </summary>
+        </member>
+        <member name="F:accelerometer.dataType.both">
+            <summary>
+            加速度と角速度データの両方
+            </summary>
+        </member>
+        <member name="T:accelerometer.SensorVer">
+            <summary>
+            センサの型番
+            </summary>
+        </member>
+        <member name="T:accelerometer.Endian">
+            <summary>
+            エンディアン
+            </summary>
+        </member>
+        <member name="F:accelerometer.Endian.Little">
+            <summary>
+            リトルエンディアン
+            </summary>
+        </member>
+        <member name="F:accelerometer.Endian.Big">
+            <summary>
+            ビッグエンディアン
+            </summary>
+        </member>
+        <member name="T:accelerometer.SensorConfig">
+            <summary>
+            センサの設定情報を管理するクラス
+            </summary>
+        </member>
+        <member name="M:accelerometer.SensorConfig.#ctor(accelerometer.SensorVer)">
+            <summary>
+            センサの設定情報を管理するクラス
+            </summary>
+            <param name="version"></param>
+        </member>
+        <member name="P:accelerometer.SensorConfig.RequiredDataNum">
+            <summary>
+            データを形成するのに必要なバイト配列の要素数
+            </summary>
+        </member>
+        <member name="P:accelerometer.SensorConfig.FixedData">
+            <summary>
+            データの先頭部分の固定された情報
+            </summary>
+        </member>
+        <member name="P:accelerometer.SensorConfig.Endian">
+            <summary>
+            送られる情報のエンディアン
+            </summary>
+        </member>
+        <member name="P:accelerometer.SensorConfig.Version">
+            <summary>
+            センサの型番
+            </summary>
+        </member>
         <member name="T:accelerometer.SensorData">
             <summary>
             AccelDataをリストとして保持するクラス
             </summary>
+        </member>
+        <member name="M:accelerometer.SensorData.#ctor(accelerometer.dataType,accelerometer.SensorVer)">
+            <summary>
+            センサデータを管理するクラス
+            </summary>
+            <param name="type">データタイプ（加速度のみ、角速度のみ、両方）</param>
+            <param name="version">センサの型番</param>
         </member>
         <member name="M:accelerometer.SensorData.pushDataBuffer(System.Byte[])">
             <summary>
@@ -118,14 +198,14 @@
             </summary>
             <param name="data"></param>
         </member>
-        <member name="P:accelerometer.SensorData.FixedData">
+        <member name="P:accelerometer.SensorData.Encoding">
             <summary>
-            得るデータと受け取るデータの先頭固定バイト
+            エンコーディング
             </summary>
         </member>
-        <member name="P:accelerometer.SensorData.RequiredDataNum">
+        <member name="P:accelerometer.SensorData.Config">
             <summary>
-            得るデータと配列の個数の関係
+            センサの設定情報
             </summary>
         </member>
         <member name="P:accelerometer.SensorData.LastData">

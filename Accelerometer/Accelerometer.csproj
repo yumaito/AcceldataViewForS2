@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AccelData\AccelData.cs" />
     <Compile Include="AccelData\enum.cs" />
+    <Compile Include="AccelData\SensorConfig.cs" />
     <Compile Include="AccelData\SensorData.cs" />
     <Compile Include="AccelData\Statistics.cs" />
     <Compile Include="AccelData\XYZData.cs" />

@@ -84,7 +84,7 @@ namespace accelview_classes
             //
             toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
             //シリアル通信のエンコード設定
-            serialPort1.Encoding = Encoding.ASCII;
+            serialPort1.Encoding = SensorData.Encoding;
         }
         //画面の表示を初期化する
         private void Clear()
@@ -109,7 +109,7 @@ namespace accelview_classes
             {
                 string r = serialPort1.ReadExisting();
                 //stringで取得されたデータをbyteに変換するような処理を書く
-                byte[] temp = Encoding.ASCII.GetBytes(r);
+                byte[] temp = SensorData.Encoding.GetBytes(r);
                 sensorData.pushDataBuffer(temp);
                 //テキストボックスを加速度の値で埋めるメソッド
                 this.TextFill(this.sensorData.LastData);
