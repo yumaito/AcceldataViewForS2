@@ -226,6 +226,11 @@
             エンコーディング
             </summary>
         </member>
+        <member name="P:accelerometer.SensorData.CurrentFreq">
+            <summary>
+            サンプリング周波数
+            </summary>
+        </member>
         <member name="P:accelerometer.SensorData.Config">
             <summary>
             センサの設定情報

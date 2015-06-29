@@ -19,11 +19,10 @@ namespace accelerometer
         private List<byte> dataBuffer;
         //private int bufferindex;
         private const int maximumData = 10000;
+        private double currentFreq;
         //センサの設定情報
         private SensorConfig sensConfig;
         #region 通信に必要な変数
-        //private Dictionary<dataType, int> requiredDataNum;
-        //private Dictionary<dataType, byte[]> fixedData;
         #region static
         private static Encoding encoding = Encoding.ASCII;
         #endregion
@@ -43,6 +42,16 @@ namespace accelerometer
             }
         }
         #endregion
+        /// <summary>
+        /// サンプリング周波数
+        /// </summary>
+        public double CurrentFreq
+        {
+            get
+            {
+                return this.currentFreq;
+            }
+        }
         /// <summary>
         /// センサの設定情報
         /// </summary>
@@ -168,6 +177,14 @@ namespace accelerometer
         private void pushData(AccelData input)
         {
             this.allData.Add(input);
+            if (this.allData.Count > 1)
+            {
+                int t = this.allData.Last().Time - this.allData[this.allData.Count - 2].Time;
+                if (t != 0)
+                {
+                    this.currentFreq = 1000 / t;
+                }
+            }
             //もしデータの個数がmaximumDataを超えたら、リストの最初の値を削除
             if (this.allData.Count > maximumData)
             {

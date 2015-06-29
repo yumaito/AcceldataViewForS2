@@ -135,8 +135,9 @@ namespace accelview_classes
         }
         private void SerialOpen()
         {
+            this.Cursor = Cursors.WaitCursor;
             toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
-            string cmd = "agb +000000000 5 4 0";//waa-010
+            string cmd = "agb +000000000 5 1 0";//waa-010
             //以下の関数で作成することも可能
             //cmd = SensorConfig.MakeCommand(dataType.both, SensorVer.WAA010, 5, 4);
             //cmd = "0x9a 0x16"
@@ -159,7 +160,7 @@ namespace accelview_classes
                 //加速度と角速度をstopされるまで出力する
                 serialPort1.Write(cmd);
             }
-
+            this.Cursor = Cursors.Default;
         }
         private void SerialClose()
         {
@@ -329,6 +330,7 @@ namespace accelview_classes
         #region その他データ受信毎に実行されるメソッド
         private void ProcessingByReceive()
         {
+            toolStripStatusLabelFreq.Text = "freq = " + sensorData.CurrentFreq.ToString("####.##") + "Hz";
             //double[] means = Statistics.Mean(sensorData.AllData);
             //textBoxDataView.Text += "加速度(x,y,z),角速度(x,y,z)=";
             //for (int i = 0; i < means.Length; i++)

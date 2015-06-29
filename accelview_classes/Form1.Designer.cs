@@ -71,6 +71,7 @@
             this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripStatusLabelFreq = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxAccel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -327,7 +328,8 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripStatusLabelConnectCondition});
+            this.toolStripStatusLabelConnectCondition,
+            this.toolStripStatusLabelFreq});
             this.statusStrip1.Location = new System.Drawing.Point(0, 543);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(505, 22);
@@ -337,7 +339,8 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(77, 17);
+            this.toolStripStatusLabel1.Text = "data num =";
             // 
             // toolStripStatusLabelConnectCondition
             // 
@@ -469,6 +472,14 @@
             this.toolStripButtonSave.Text = "保存";
             this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
+            // toolStripStatusLabelFreq
+            // 
+            this.toolStripStatusLabelFreq.Name = "toolStripStatusLabelFreq";
+            this.toolStripStatusLabelFreq.Size = new System.Drawing.Size(315, 17);
+            this.toolStripStatusLabelFreq.Spring = true;
+            this.toolStripStatusLabelFreq.Text = "freq = ";
+            this.toolStripStatusLabelFreq.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -545,6 +556,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxVersion;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFreq;
     }
 }
 
