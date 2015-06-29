@@ -136,7 +136,7 @@ namespace accelview_classes
         private void SerialOpen()
         {
             toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
-            string cmd = "agb +000000000 5 1 0 \n";
+            string cmd = "agb +000000000 5 4 0 \n";
             if (!serialPort1.IsOpen)
             {
                 //dataTypeを受け取るデータによって変える
