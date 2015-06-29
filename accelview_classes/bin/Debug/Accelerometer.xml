@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Accelerometer</name>
+    </assembly>
+    <members>
+        <member name="T:accelerometer.AccelData">
+            <summary>
+            加速度データとジャイロデータを持つクラス
+            </summary>
+        </member>
+        <member name="M:accelerometer.AccelData.#ctor(System.Int16,accelerometer.XYZData,accelerometer.XYZData)">
+            <summary>
+            加速度データのインスタンス生成
+            </summary>
+            <param name="time">時間</param>
+            <param name="accel">加速度</param>
+            <param name="gyro">角速度</param>
+        </member>
+        <member name="M:accelerometer.AccelData.#ctor(System.Byte[],accelerometer.dataType,accelerometer.SensorVer)">
+            <summary>
+            加速度データのインスタンス生成
+            </summary>
+            <param name="byteData">20個の要素からなるバイト型配列</param>
+        </member>
+        <member name="M:accelerometer.AccelData.ReturnByNumber(System.Int32)">
+            <summary>
+            各値を番号で指定できるようにするメソッド
+            </summary>
+            <param name="num">0～2なら加速度の値、3～5なら角速度の値</param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.AccelData.CreateTime(System.Byte[])">
+            <summary>
+            時刻を生成する
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:accelerometer.AccelData.ReturnData(System.Byte[])">
+            <summary>
+            byte型の配列からXYZData型のインスタンスを返すメソッド
+            </summary>
+            <param name="data">byte型の配列（6要素必要）</param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.AccelData.ToString">
+            <summary>
+            デバッグ時に見やすい用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.AccelData.CSVFormat(accelerometer.dataType)">
+            <summary>
+            CSV出力するとき用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:accelerometer.AccelData.Time">
+            <summary>
+            時刻（int型）
+            </summary>
+        </member>
+        <member name="P:accelerometer.AccelData.Accel">
+            <summary>
+            加速度
+            </summary>
+        </member>
+        <member name="P:accelerometer.AccelData.Gyro">
+            <summary>
+            ジャイロ
+            </summary>
+        </member>
+        <member name="T:accelerometer.SensorData">
+            <summary>
+            AccelDataをリストとして保持するクラス
+            </summary>
+        </member>
+        <member name="M:accelerometer.SensorData.pushDataBuffer(System.Byte[])">
+            <summary>
+            シリアルポートからのデータを受け取りデータバッファに溜める
+            もし、加速度データに変更できるだけの量が溜まれば加速度データに変換後、該当データは破棄
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:accelerometer.SensorData.pushData(accelerometer.AccelData)">
+            <summary>
+            SensorDataにAccelDataを追加するメソッド
+            </summary>
+            <param name="input">AccelData</param>
+        </member>
+        <member name="M:accelerometer.SensorData.ExtractData(System.Int32,System.Int32)">
+            <summary>
+            指定した番号から番号までのデータを返すメソッド
+            </summary>
+            <param name="head">頭の番号</param>
+            <param name="tail">終わりの番号</param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.SensorData.ExtractData(System.Int32)">
+            <summary>
+            後ろから指定した数分のデータを返すメソッド
+            </summary>
+            <param name="num">指定する数</param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.SensorData.saveData(System.String,System.Text.Encoding,System.Boolean)">
+            <summary>
+            たまっているデータをcsvファイルとして保存する
+            </summary>
+            <param name="path">保存先のパス</param>
+            <param name="enc">エンコード</param>
+            <param name="isHeader">ヘッダーを入れるかどうか</param>
+        </member>
+        <member name="M:accelerometer.SensorData.pushDataBuffer(System.Byte)">
+            <summary>
+            シリアルポートからのデータを受け取りデータバッファに溜める
+            もし加速度データに変更できるだけの量が溜まれば加速度データに変換後、該当データは破棄
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="P:accelerometer.SensorData.FixedData">
+            <summary>
+            得るデータと受け取るデータの先頭固定バイト
+            </summary>
+        </member>
+        <member name="P:accelerometer.SensorData.RequiredDataNum">
+            <summary>
+            得るデータと配列の個数の関係
+            </summary>
+        </member>
+        <member name="P:accelerometer.SensorData.LastData">
+            <summary>
+            リストに保持されている最後のデータを返す
+            </summary>
+        </member>
+        <member name="T:accelerometer.Statistics">
+            <summary>
+            統計計算をする静的クラス
+            </summary>
+        </member>
+        <member name="M:accelerometer.Statistics.Mean(System.Collections.Generic.List{accelerometer.AccelData})">
+            <summary>
+            算術平均の計算
+            </summary>
+            <param name="data">AccelDataのリスト
+            </param>
+            <returns>0～2は加速度のX,Y,Z,3～5は角速度のX,Y,Z</returns>
+        </member>
+        <member name="M:accelerometer.XYZData.#ctor">
+            <summary>
+            x、y、zの値を持つクラスのインスタンスを生成
+            </summary>
+        </member>
+        <member name="M:accelerometer.XYZData.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            x,y,zの値をもつクラスのインスタンスを生成
+            </summary>
+            <param name="x">x軸</param>
+            <param name="y">y軸</param>
+            <param name="z">z軸</param>
+        </member>
+        <member name="M:accelerometer.XYZData.ReturnByNumber(System.Int32)">
+            <summary>
+            各値を番号で指定できるようにするメソッド
+            </summary>
+            <param name="num">0ならx軸、1ならy軸、2ならz軸の値</param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.XYZData.Size">
+            <summary>
+            ベクトルの大きさを返すメソッド（適当に作ってみた）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.XYZData.ToString">
+            <summary>
+            デバッグ時に見やすい用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.XYZData.CSVFormat">
+            <summary>
+            CSV出力するとき用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:accelerometer.XYZData.X">
+            <summary>
+            X軸データ
+            </summary>
+        </member>
+        <member name="P:accelerometer.XYZData.Y">
+            <summary>
+            Y軸データ
+            </summary>
+        </member>
+        <member name="P:accelerometer.XYZData.Z">
+            <summary>
+            Z軸データ
+            </summary>
+        </member>
+    </members>
+</doc>

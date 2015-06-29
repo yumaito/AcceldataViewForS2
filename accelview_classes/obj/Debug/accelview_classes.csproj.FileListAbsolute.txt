@@ -21,3 +21,4 @@ C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\a
 C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\obj\Debug\accelview_classes.csproj.GenerateResource.Cache
 C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\bin\Debug\Accelerometer.dll
 C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\bin\Debug\Accelerometer.pdb
+C:\Users\悠真\Desktop\MyApps\accelview_classes_2\accelview_classes\bin\Debug\Accelerometer.xml
