@@ -23,13 +23,19 @@ Form.cs内の`SerialOpen()`関数内の`string cmd`がそのコマンドです�
 1. 第1引数  
 データのタイプを指定する列挙体です。 
 
-```csharp
-dataType.both //加速度データおよび角速度データを両方とも取得する場合
-dataType.accel //加速度データのみを取得する場合
-dataTyep.gyro //角速度データのみを取得する場合
-```
+    ```csharp
+    dataType.both //加速度データおよび角速度データを両方とも取得する場合
+    dataType.accel //加速度データのみを取得する場合
+    dataTyep.gyro //角速度データのみを取得する場合
+    ```
 
-1. 第2引数
+1. 第2引数  
+ センサーの型番を指定する列挙体です。
+
+    ```csharp
+    SensorVer.WAA010
+    SensorVer.TSND121
+    ```
 
 ライブラリ単体で使う場合は、dllを参照後、以下のusingディレクティブを参照します。
 
@@ -42,15 +48,22 @@ using accelerometer;
 ```csharp
 delegate void setfocus();
 ```
+シリアル通信のエンコードを指定しておきます（デフォルトのままでも大丈夫だけど、念のために明示）
+
+```csharp
+serialPort1.Encoding = SensorData.Encoding;
+```
 
 シリアル通信の受信イベントの箇所に以下を追加します
 
 ```csharp
 private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArdgs e)
 {
-  BeginInvoke((setfocus)delegate()
+  Invoke((setfocus)delegate()
   {
-    string r = serialPort1.ReadExisting();
+    byte[] buffer = new byte[serialPort1.ReadBufferSize];
+    int t = serialPort1.Read(buffer,0,buffer.Length);
+    sensorData.pushDataBuffer(buffer);
     //その他データ受信毎に行いたい処理
   });
 }
