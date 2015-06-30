@@ -5,6 +5,7 @@ S2初心者のための加速度センサビュワー
 対応している加速度センサは以下です。
 
 * WAA-010
+* TSND121(現在実装中)
 
 ### 構成
 
@@ -63,3 +64,12 @@ private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArdg
   });
 }
 ```
+
+シリアル通信で送信するコマンドはセンサの型番によって変わります。WAA-010の場合はstring型でTSND121の場合はbyte[]型で作成します。TSND121でコマンドの最後に必要なBCCは以下の関数で取得できます。
+
+```csharp
+byte[] cm = new byte[]{...};//コマンド（BCCを除く）
+byte[] c = SensorConfig.MakeCommand(SensorVer.TSND121,cm);//cmの末尾にBCCが追加される
+```
+
+string型を送信するときは`serialPort1.WriteLine(cmd);`でbyte[]を送信するときは`serialPort1.Write(c,0,c.Length);`で送信します。
