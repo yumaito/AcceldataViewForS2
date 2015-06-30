@@ -59,9 +59,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelConnectCondition = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelFreq = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageOriginal = new System.Windows.Forms.TabPage();
+            this.tabPageCustomize = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripComboBoxVersion = new System.Windows.Forms.ToolStripComboBox();
@@ -71,7 +72,8 @@
             this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripStatusLabelFreq = new System.Windows.Forms.ToolStripStatusLabel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxAccel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -79,8 +81,9 @@
             this.flowLayoutPanel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPageOriginal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -332,7 +335,7 @@
             this.toolStripStatusLabelFreq});
             this.statusStrip1.Location = new System.Drawing.Point(0, 543);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(505, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(556, 22);
             this.statusStrip1.TabIndex = 22;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -348,60 +351,70 @@
             this.toolStripStatusLabelConnectCondition.Size = new System.Drawing.Size(67, 17);
             this.toolStripStatusLabelConnectCondition.Text = "接続状態：";
             // 
+            // toolStripStatusLabelFreq
+            // 
+            this.toolStripStatusLabelFreq.Name = "toolStripStatusLabelFreq";
+            this.toolStripStatusLabelFreq.Size = new System.Drawing.Size(346, 17);
+            this.toolStripStatusLabelFreq.Spring = true;
+            this.toolStripStatusLabelFreq.Text = "freq = ";
+            this.toolStripStatusLabelFreq.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageOriginal);
+            this.tabControl1.Controls.Add(this.tabPageCustomize);
             this.tabControl1.Location = new System.Drawing.Point(12, 52);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(481, 488);
+            this.tabControl1.Size = new System.Drawing.Size(532, 488);
             this.tabControl1.TabIndex = 23;
             // 
-            // tabPage1
+            // tabPageOriginal
             // 
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.groupBoxGyro);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.groupBoxAccel);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.textBoxTime);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.textBoxX);
-            this.tabPage1.Controls.Add(this.textBoxGX);
-            this.tabPage1.Controls.Add(this.textBoxY);
-            this.tabPage1.Controls.Add(this.textBoxGZ);
-            this.tabPage1.Controls.Add(this.textBoxGY);
-            this.tabPage1.Controls.Add(this.textBoxZ);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(473, 462);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "メインビュー";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageOriginal.Controls.Add(this.trackBar1);
+            this.tabPageOriginal.Controls.Add(this.label7);
+            this.tabPageOriginal.Controls.Add(this.label1);
+            this.tabPageOriginal.Controls.Add(this.label2);
+            this.tabPageOriginal.Controls.Add(this.groupBoxGyro);
+            this.tabPageOriginal.Controls.Add(this.label3);
+            this.tabPageOriginal.Controls.Add(this.pictureBox1);
+            this.tabPageOriginal.Controls.Add(this.groupBoxAccel);
+            this.tabPageOriginal.Controls.Add(this.label4);
+            this.tabPageOriginal.Controls.Add(this.textBoxTime);
+            this.tabPageOriginal.Controls.Add(this.label5);
+            this.tabPageOriginal.Controls.Add(this.label6);
+            this.tabPageOriginal.Controls.Add(this.textBoxX);
+            this.tabPageOriginal.Controls.Add(this.textBoxGX);
+            this.tabPageOriginal.Controls.Add(this.textBoxY);
+            this.tabPageOriginal.Controls.Add(this.textBoxGZ);
+            this.tabPageOriginal.Controls.Add(this.textBoxGY);
+            this.tabPageOriginal.Controls.Add(this.textBoxZ);
+            this.tabPageOriginal.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOriginal.Name = "tabPageOriginal";
+            this.tabPageOriginal.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOriginal.Size = new System.Drawing.Size(524, 462);
+            this.tabPageOriginal.TabIndex = 0;
+            this.tabPageOriginal.Text = "メインビュー（なるべくこのまま）";
+            this.tabPageOriginal.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabPageCustomize
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(473, 462);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageCustomize.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCustomize.Name = "tabPageCustomize";
+            this.tabPageCustomize.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCustomize.Size = new System.Drawing.Size(473, 462);
+            this.tabPageCustomize.TabIndex = 1;
+            this.tabPageCustomize.Text = "カスタマイズ用";
+            this.tabPageCustomize.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(505, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(556, 24);
             this.menuStrip1.TabIndex = 25;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -417,7 +430,7 @@
             this.toolStripButtonSave});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(505, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(556, 25);
             this.toolStrip1.TabIndex = 26;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -472,19 +485,37 @@
             this.toolStripButtonSave.Text = "保存";
             this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
-            // toolStripStatusLabelFreq
+            // label7
             // 
-            this.toolStripStatusLabelFreq.Name = "toolStripStatusLabelFreq";
-            this.toolStripStatusLabelFreq.Size = new System.Drawing.Size(315, 17);
-            this.toolStripStatusLabelFreq.Spring = true;
-            this.toolStripStatusLabelFreq.Text = "freq = ";
-            this.toolStripStatusLabelFreq.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(443, 137);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 12);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "縦軸の拡大率";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.LargeChange = 50;
+            this.trackBar1.Location = new System.Drawing.Point(473, 158);
+            this.trackBar1.Maximum = 500;
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBar1.Size = new System.Drawing.Size(45, 298);
+            this.trackBar1.TabIndex = 23;
+            this.trackBar1.Value = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 565);
+            this.ClientSize = new System.Drawing.Size(556, 565);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
@@ -504,10 +535,11 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabPageOriginal.ResumeLayout(false);
+            this.tabPageOriginal.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -544,8 +576,8 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageOriginal;
+        private System.Windows.Forms.TabPage tabPageCustomize;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelConnectCondition;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -557,6 +589,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxVersion;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFreq;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label label7;
     }
 }
 

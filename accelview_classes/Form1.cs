@@ -82,7 +82,7 @@ namespace accelview_classes
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //
-            toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
+            this.connectionchange("接続状態：未接続");
             //シリアル通信のエンコード設定
             serialPort1.Encoding = SensorData.Encoding;
         }
@@ -136,8 +136,8 @@ namespace accelview_classes
         private void SerialOpen()
         {
             this.Cursor = Cursors.WaitCursor;
-            toolStripStatusLabelConnectCondition.Text = "接続状態：接続中...";
-            string cmd = "agb +000000000 5 4 0";//waa-010
+            this.connectionchange("接続状態：接続中...");
+            string cmd = "agb +000000000 5 1 0";//waa-010
             //以下の関数で作成することも可能
             //cmd = SensorConfig.MakeCommand(dataType.both, SensorVer.WAA010, 5, 4);
             //cmd = "0x9a 0x16"
@@ -150,13 +150,13 @@ namespace accelview_classes
                 //serialPort1.Close();
                 serialPort1.PortName = toolStripComboBoxCOM.SelectedItem.ToString();
                 serialPort1.Open();
-                toolStripStatusLabelConnectCondition.Text = "接続状態：接続";
+                this.connectionchange("接続状態：接続"); ;
                 //加速度と角速度をstopされるまで出力する
                 serialPort1.WriteLine(cmd);
             }
             else
             {
-                toolStripStatusLabelConnectCondition.Text = "接続状態：接続";
+                this.connectionchange("接続状態：接続"); ;
                 //加速度と角速度をstopされるまで出力する
                 serialPort1.Write(cmd);
             }
@@ -169,7 +169,7 @@ namespace accelview_classes
                 //シリアルポートが開いているなら
                 //切断する処理を行う
                 serialPort1.Write("stop all \n");
-                toolStripStatusLabelConnectCondition.Text = "接続状態：未接続";
+                this.connectionchange("接続状態：接続"); ;
                 //serialPort1.Close();
 
                 //serialPort1.Close();
@@ -179,6 +179,10 @@ namespace accelview_classes
         #endregion
 
         #region 画面への描画など
+        private void connectionchange(string str)
+        {
+            toolStripStatusLabelConnectCondition.Text = str;
+        }
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             this.pictureBox1.Invalidate();
@@ -198,7 +202,7 @@ namespace accelview_classes
             textBoxGY.Text = data.Gyro.Y.ToString();
             textBoxGZ.Text = data.Gyro.Z.ToString();
         }
-        private void DrawGraphs(Graphics g)
+        private void DrawGraphs(Graphics g, int ratio)
         {
             //Graphics g = pictureBox1.CreateGraphics();
             Pen penBlack = new Pen(Color.Black, 1);
@@ -212,13 +216,15 @@ namespace accelview_classes
             int w = pictureBox1.Width;
             int h = pictureBox1.Height;
             //時間軸描画
-            g.DrawLine(penBlack, new Point(0, h / 2), new Point(w, h / 2));
+            //g.DrawLine(penBlack, new Point(0, h / 2), new Point(w, h / 2));
             //描画する分のSensorDataを取得--------------------------------
             AccelData[] drawnData = sensorData.ExtractData(w).ToArray();
             //------------------------------------------------------------
             //drawnの左側を0で埋める（右詰状態にしてから描画する）
             drawnData = this.FillData(drawnData, w);
             //チェックボックスにチェックがついている値をグラフにして描画する。
+            
+            //label7.Text = ratio.ToString();
             for (int i = 1; i < w; i++)
             {
                 //1つずつコントロールの名前を書くのは面倒なので、ループ処理でできるようにAccelDataクラスとXYZDataクラスに数字を指定して目的の値を返すメソッドを追加。
@@ -231,8 +237,8 @@ namespace accelview_classes
                     if (cb.Checked)
                     {
                         //TabIndexはXが0、Yが1、Zが2になっているので、チェックボックスのTabIndexを引数にしてAcccelDataクラスから値を取得する
-                        int preY = this.AdjustY(drawnData[i - 1].ReturnByNumber(cb.TabIndex), h, 50);
-                        int Y = this.AdjustY(drawnData[i].ReturnByNumber(cb.TabIndex), h, 50);
+                        int preY = this.AdjustY(drawnData[i - 1].ReturnByNumber(cb.TabIndex), h, ratio);
+                        int Y = this.AdjustY(drawnData[i].ReturnByNumber(cb.TabIndex), h, ratio);
                         g.DrawLine(pens[cb.TabIndex], new Point(i - 1, preY), new Point(i, Y));
                         //if (checkBoxMean.Checked)
                         //{
@@ -246,8 +252,8 @@ namespace accelview_classes
                     if (cb.Checked)
                     {
                         //加速度と同じくTabIndexが0でX、1でY、2でZなので、それに3を足した値（3、4、5）で角速度の値を取得できる。
-                        int preY = this.AdjustY(drawnData[i - 1].ReturnByNumber(cb.TabIndex + 3), h, 50);
-                        int Y = this.AdjustY(drawnData[i].ReturnByNumber(cb.TabIndex + 3), h, 50);
+                        int preY = this.AdjustY(drawnData[i - 1].ReturnByNumber(cb.TabIndex + 3), h, ratio);
+                        int Y = this.AdjustY(drawnData[i].ReturnByNumber(cb.TabIndex + 3), h, ratio);
                         g.DrawLine(pens[cb.TabIndex + 3], new Point(i - 1, preY), new Point(i, Y));
                     }
                 }
@@ -258,7 +264,7 @@ namespace accelview_classes
             {
                 if (cb.Checked)
                 {
-                    int Y = this.AdjustY(drawnData[drawnData.Length - 1].ReturnByNumber(cb.TabIndex), h, 50);
+                    int Y = this.AdjustY(drawnData[drawnData.Length - 1].ReturnByNumber(cb.TabIndex), h, ratio);
                     g.FillEllipse(brushes[cb.TabIndex], w - 2 * radius, Y - radius, 2 * radius, 2 * radius);
                 }
             }
@@ -266,8 +272,8 @@ namespace accelview_classes
             {
                 if (cb.Checked)
                 {
-                    int Y = this.AdjustY(drawnData[drawnData.Length - 1].ReturnByNumber(cb.TabIndex + 3), h, 50);
-                    //g.FillEllipse(brushes[cb.TabIndex + 3], w - 2 * radius, Y - radius, 2 * radius, 2 * radius);
+                    int Y = this.AdjustY(drawnData[drawnData.Length - 1].ReturnByNumber(cb.TabIndex + 3), h, ratio);
+                    g.FillEllipse(brushes[cb.TabIndex + 3], w - 2 * radius, Y - radius, 2 * radius, 2 * radius);
                 }
             }
         }
@@ -304,14 +310,23 @@ namespace accelview_classes
         /// pictureBoxの縦方向の座標を変換するメソッド
         /// 中央を原点、上向きをプラスにする
         /// </summary>
-        /// <param name="y"></param>
-        /// <param name="h"></param>
-        /// <param name="ratio"></param>
+        /// <param name="y">補正元となる値</param>
+        /// <param name="h">画面の縦</param>
+        /// <param name="ratio">縮小率</param>
         /// <returns></returns>
         private int AdjustY(int y, int h, int ratio)
         {
-            int result = h / 2 - y;
+            //int result = h / 2 - y;
             return h / 2 - y / ratio;
+        }
+        private void BasicDraw(Graphics g)
+        {
+            //基本描画
+            Pen penBlack = new Pen(Color.Black, 1);
+            int w = pictureBox1.Width;
+            int h = pictureBox1.Height;
+            //時間軸描画
+            g.DrawLine(penBlack, new Point(0, h / 2), new Point(w, h / 2));
         }
         /// <summary>
         /// 再描画メソッド（再描画（ウィンドウで隠れたりなど）が必要なときに呼ばれるメソッド、
@@ -321,9 +336,12 @@ namespace accelview_classes
         /// <param name="e"></param>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            this.BasicDraw(e.Graphics);
             if (this.sensorData != null)
             {
-                this.DrawGraphs(e.Graphics);
+                //trackBarの値から縮小率を算出
+                int ratio = (trackBar1.Value - trackBar1.Minimum) * (1 - 50) / (trackBar1.Maximum - trackBar1.Minimum) + 50;
+                this.DrawGraphs(e.Graphics, ratio);
             }
         }
 
@@ -388,6 +406,11 @@ namespace accelview_classes
             }
         }
         #endregion
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            pictureBox1.Invalidate();
+        }
 
         
 
