@@ -101,6 +101,9 @@ namespace accelerometer
                     this.requiredDataNum.Add(dataType.gyro, 15);
                     break;
                 case SensorVer.TSND121:
+                    this.requiredDataNum.Add(dataType.both, 25);
+                    this.requiredDataNum.Add(dataType.accel, 25);
+                    this.requiredDataNum.Add(dataType.gyro, 25);
                     break;
                 default:
                     break;
@@ -120,6 +123,10 @@ namespace accelerometer
                     this.fixedData.Add(dataType.gyro, gyb);
                     break;
                 case SensorVer.TSND121:
+                    byte[] head = new byte[] { 0x9a, 0x80 };
+                    this.fixedData.Add(dataType.both, head);
+                    this.fixedData.Add(dataType.accel, head);
+                    this.fixedData.Add(dataType.gyro, head);
                     break;
                 default:
                     break;
@@ -142,8 +149,17 @@ namespace accelerometer
                     short temp = (short)(value[0] << 8 | value[1]);
                     return (int)(temp);
                 case Endian.Little:
-                    short temp2 = (short)(value[1] << 8 | value[0]);
-                    return (int)(temp2);
+                    if (value.Length == 3)
+                    {
+                        var temp3 = (value[2] << 16 | value[1] << 8 | value[0]);
+                        return (int)(temp3);
+                    }
+                    else
+                    {
+                        short temp2 = (short)(value[1] << 8 | value[0]);
+                        return (int)(temp2);
+                    }
+                    
                 default:
                     return 0;
             }
@@ -192,12 +208,28 @@ namespace accelerometer
                     }
                     header += sampling.ToString() + " " + ave.ToString() + " 0";
                     break;
-                case SensorVer.TSND121:
-                    break;
                 default:
                     break;
             }
             return header;
+        }
+        public static byte[] MakeCommand(SensorVer sensor, byte[] withoutBcc)
+        {
+            if (sensor == SensorVer.TSND121)
+            {
+                List<byte> result = withoutBcc.ToList();
+                byte bcc = withoutBcc[0];
+                for (int i = 1; i < withoutBcc.Length; i++)
+                {
+                    bcc = (byte)(bcc ^ withoutBcc[i]);
+                }
+                result.Add(bcc);
+                return result.ToArray();
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
         #endregion
     }

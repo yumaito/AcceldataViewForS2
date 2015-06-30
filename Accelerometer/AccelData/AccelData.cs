@@ -171,22 +171,25 @@ namespace accelerometer
             {
                 case dataType.both:
                     this.CreateTime(temp.GetRange(3, 4).ToArray(), endian);
-                    this.accel = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian);
-                    this.gyro = this.ReturnData(temp.GetRange(13, 6).ToArray(), endian);
+                    this.accel = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian, 2);
+                    this.gyro = this.ReturnData(temp.GetRange(13, 6).ToArray(), endian, 2);
                     break;
                 case dataType.accel:
                     this.CreateTime(temp.GetRange(4, 4).ToArray(), endian);
-                    this.accel = this.ReturnData(temp.GetRange(8, 6).ToArray(), endian);
+                    this.accel = this.ReturnData(temp.GetRange(8, 6).ToArray(), endian, 2);
                     break;
                 case dataType.gyro:
                     this.CreateTime(temp.GetRange(3, 4).ToArray(), endian);
-                    this.gyro = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian);
+                    this.gyro = this.ReturnData(temp.GetRange(7, 6).ToArray(), endian, 2);
                     break;
             }
         }
         private void CreateDataFor121(dataType d, byte[] data, Endian endian)
         {
-
+            List<byte> temp = data.ToList();
+            this.CreateTime(temp.GetRange(2, 4).ToArray(), endian);//時刻
+            this.accel = this.ReturnData(temp.GetRange(6, 9).ToArray(), endian, 3);
+            this.gyro = this.ReturnData(temp.GetRange(15, 6).ToArray(), endian, 3);
         }
         /// <summary>
         /// 時刻を生成する
@@ -203,14 +206,14 @@ namespace accelerometer
         /// <param name="data">byte型の配列（6要素必要）</param>
         /// <param name="endian">エンディアン</param>
         /// <returns></returns>
-        private XYZData ReturnData(byte[] data, Endian endian)
+        private XYZData ReturnData(byte[] data, Endian endian, int byteNum)
         {
             //一度リストに変換
             List<byte> temp = data.ToList();
-            byte[] t = temp.GetRange(0, 2).ToArray();
-            int x = SensorConfig.ToInt32(temp.GetRange(0, 2).ToArray(), endian);
-            int y = SensorConfig.ToInt32(temp.GetRange(2, 2).ToArray(), endian);
-            int z = SensorConfig.ToInt32(temp.GetRange(4, 2).ToArray(), endian);
+            //byte[] t = temp.GetRange(0, 2).ToArray();
+            int x = SensorConfig.ToInt32(temp.GetRange(0, byteNum).ToArray(), endian);
+            int y = SensorConfig.ToInt32(temp.GetRange(byteNum, byteNum).ToArray(), endian);
+            int z = SensorConfig.ToInt32(temp.GetRange(2 * byteNum, byteNum).ToArray(), endian);
             //int x = (int)(data[0] << 8 | data[1]);
             //int y = (int)(data[2] << 8 | data[3]);
             //int z = (int)(data[4] << 8 | data[5]);

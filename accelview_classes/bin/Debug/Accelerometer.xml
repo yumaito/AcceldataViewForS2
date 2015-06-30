@@ -39,7 +39,7 @@
             <param name="data"></param>
             <param name="endian">エンディアン</param>
         </member>
-        <member name="M:accelerometer.AccelData.ReturnData(System.Byte[],accelerometer.Endian)">
+        <member name="M:accelerometer.AccelData.ReturnData(System.Byte[],accelerometer.Endian,System.Int32)">
             <summary>
             byte型の配列からXYZData型のインスタンスを返すメソッド
             </summary>
