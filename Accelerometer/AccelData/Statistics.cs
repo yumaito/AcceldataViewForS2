@@ -39,7 +39,11 @@ namespace accelerometer
             }
             return result;
         }
-
+        /// <summary>
+        /// enum型のDescriptionを取得する関数
+        /// </summary>
+        /// <param name="enumValue"></param>
+        /// <returns></returns>
         public static string GetDescription(object enumValue)
         {
             FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());

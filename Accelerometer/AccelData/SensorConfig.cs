@@ -185,7 +185,14 @@ namespace accelerometer
                     return 0;
             }
         }
-
+        /// <summary>
+        /// string型の簡単なコマンドを生成する関数
+        /// </summary>
+        /// <param name="d">データタイプ</param>
+        /// <param name="sensor">センサの型番</param>
+        /// <param name="sampling">サンプリング周期</param>
+        /// <param name="ave">何回の平均を出力するか</param>
+        /// <returns></returns>
         public static string MakeCommand(dataType d, SensorVer sensor, int sampling, int ave)
         {
             string header = "";
@@ -213,6 +220,12 @@ namespace accelerometer
             }
             return header;
         }
+        /// <summary>
+        /// byte配列からXORを計算してBCCを付け加える関数
+        /// </summary>
+        /// <param name="sensor">センサの型番</param>
+        /// <param name="withoutBcc">BCCより前のコマンド配列</param>
+        /// <returns></returns>
         public static byte[] MakeCommand(SensorVer sensor, byte[] withoutBcc)
         {
             if (sensor == SensorVer.TSND121)

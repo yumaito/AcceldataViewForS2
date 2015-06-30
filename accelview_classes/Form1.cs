@@ -396,11 +396,11 @@ namespace accelview_classes
         private void toolStripButtonSave_Click(object sender, EventArgs e)
         {
             //alldata = new Data();
-            int time = 0;
-            int rtime = 0;
-            double t = 1.0;
-            double t1 = 1.0;
-            double t2 = 1.0;
+            //int time = 0;
+            //int rtime = 0;
+            //double t = 1.0;
+            //double t1 = 1.0;
+            //double t2 = 1.0;
             //TMP temp = new TMP(time, rtime, t, t1, t2);
             //alldata.PushData(new TMP(time, rtime, t, t1, t2));
             //alldata.PushData(temp);

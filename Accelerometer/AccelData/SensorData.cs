@@ -82,7 +82,9 @@ namespace accelerometer
         //        return this.requiredDataNum;
         //    }
         //}
-        
+        /// <summary>
+        /// 格納されている全てのデータのリスト
+        /// </summary>
         public List<AccelData> AllData
         {
             get

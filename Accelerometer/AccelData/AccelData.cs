@@ -16,7 +16,7 @@ namespace accelerometer
         private int time;
         private XYZData accel;
         private XYZData gyro;
-        private dataType d;
+        //private dataType d;
         //private byte[] databuffer;
         //private int index;
         #endregion
@@ -52,16 +52,16 @@ namespace accelerometer
                 return gyro;
             }
         }
-        /// <summary>
-        /// データタイプ
-        /// </summary>
-        public dataType D
-        {
-            get
-            {
-                return d;
-            }
-        }
+        ///// <summary>
+        ///// データタイプ
+        ///// </summary>
+        //public dataType D
+        //{
+        //    get
+        //    {
+        //        return d;
+        //    }
+        //}
         #endregion
 
         #region コンストラクタ
@@ -205,6 +205,7 @@ namespace accelerometer
         /// </summary>
         /// <param name="data">byte型の配列（6要素必要）</param>
         /// <param name="endian">エンディアン</param>
+        /// <param name="byteNum">1データに使うバイト数</param>
         /// <returns></returns>
         private XYZData ReturnData(byte[] data, Endian endian, int byteNum)
         {

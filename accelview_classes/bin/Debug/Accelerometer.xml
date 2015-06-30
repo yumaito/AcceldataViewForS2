@@ -45,6 +45,7 @@
             </summary>
             <param name="data">byte型の配列（6要素必要）</param>
             <param name="endian">エンディアン</param>
+            <param name="byteNum">1データに使うバイト数</param>
             <returns></returns>
         </member>
         <member name="M:accelerometer.AccelData.ToString">
@@ -74,11 +75,6 @@
             ジャイロ
             </summary>
         </member>
-        <member name="P:accelerometer.AccelData.D">
-            <summary>
-            データタイプ
-            </summary>
-        </member>
         <member name="T:accelerometer.dataType">
             <summary>
             取得するデータのタイプ
@@ -102,6 +98,16 @@
         <member name="T:accelerometer.SensorVer">
             <summary>
             センサの型番
+            </summary>
+        </member>
+        <member name="F:accelerometer.SensorVer.WAA010">
+            <summary>
+            WAA-010
+            </summary>
+        </member>
+        <member name="F:accelerometer.SensorVer.TSND121">
+            <summary>
+            TSND121
             </summary>
         </member>
         <member name="T:accelerometer.Endian">
@@ -144,6 +150,24 @@
             </summary>
             <param name="value"></param>
             <param name="endian"></param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.SensorConfig.MakeCommand(accelerometer.dataType,accelerometer.SensorVer,System.Int32,System.Int32)">
+            <summary>
+            string型の簡単なコマンドを生成する関数
+            </summary>
+            <param name="d">データタイプ</param>
+            <param name="sensor">センサの型番</param>
+            <param name="sampling">サンプリング周期</param>
+            <param name="ave">何回の平均を出力するか</param>
+            <returns></returns>
+        </member>
+        <member name="M:accelerometer.SensorConfig.MakeCommand(accelerometer.SensorVer,System.Byte[])">
+            <summary>
+            byte配列からXORを計算してBCCを付け加える関数
+            </summary>
+            <param name="sensor">センサの型番</param>
+            <param name="withoutBcc">BCCより前のコマンド配列</param>
             <returns></returns>
         </member>
         <member name="P:accelerometer.SensorConfig.RequiredDataNum">
@@ -236,6 +260,11 @@
             センサの設定情報
             </summary>
         </member>
+        <member name="P:accelerometer.SensorData.AllData">
+            <summary>
+            格納されている全てのデータのリスト
+            </summary>
+        </member>
         <member name="P:accelerometer.SensorData.LastData">
             <summary>
             リストに保持されている最後のデータを返す
@@ -253,6 +282,18 @@
             <param name="data">AccelDataのリスト
             </param>
             <returns>0～2は加速度のX,Y,Z,3～5は角速度のX,Y,Z</returns>
+        </member>
+        <member name="M:accelerometer.Statistics.GetDescription(System.Object)">
+            <summary>
+            enum型のDescriptionを取得する関数
+            </summary>
+            <param name="enumValue"></param>
+            <returns></returns>
+        </member>
+        <member name="T:accelerometer.XYZData">
+            <summary>
+            加速度、角速度などxyzの3値から成るデータを表すクラス
+            </summary>
         </member>
         <member name="M:accelerometer.XYZData.#ctor">
             <summary>

@@ -30,8 +30,14 @@ namespace accelerometer
     /// </summary>
     public enum SensorVer
     {
+        /// <summary>
+        /// WAA-010
+        /// </summary>
         [Description("WAA-010")]
         WAA010,
+        /// <summary>
+        /// TSND121
+        /// </summary>
         [Description("TSND121")]
         TSND121
     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace accelerometer
 {
+    /// <summary>
+    /// 加速度、角速度などxyzの3値から成るデータを表すクラス
+    /// </summary>
     public class XYZData
     {
         #region メンバ変数
