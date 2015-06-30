@@ -138,14 +138,17 @@ namespace accelview_classes
             this.Cursor = Cursors.WaitCursor;
             SensorVer sv = (SensorVer)toolStripComboBoxVersion.SelectedIndex;
             this.connectionchange("接続状態：接続中...");
-            string cmd = "agb +000000000 5 1 0";//waa-010
+            //WAA-010で送信するコマンド===================================
+            string cmd = "agb +000000000 4 1 0";//waa-010
+            //以下の関数で作成することも可能
+            //cmd = SensorConfig.MakeCommand(dataType.both, SensorVer.WAA010, 5, 4);
+            //==========================================================
+            //TSND121で送信するコマンド===================================
             byte[] cm = new byte[]{0x9a,0x13,0x00,
                             0x00,0x01,0x01,0x00,0x00,0x00,
                         0x00,0x00,0x01,0x01,0x00,0x00,0x00};
-            byte[] c = SensorConfig.MakeCommand(sv, cm);//tsnd121
-            //以下の関数で作成することも可能
-            //cmd = SensorConfig.MakeCommand(dataType.both, SensorVer.WAA010, 5, 4);
-            //cmd = "0x9a 0x16"
+            byte[] c = SensorConfig.MakeCommand(SensorVer.TSND121, cm);//tsnd121
+            //===========================================================
             
             if (!serialPort1.IsOpen)
             {
@@ -153,11 +156,9 @@ namespace accelview_classes
                 //加速度データと角速度データ両方ならdataType.both,加速度データのみならdataType.accel,角速度データのみならdataType.gyro
                 this.sensorData = new SensorData(dataType.both, sv);
                 //シリアルポートが開いていないなら
-                //serialPort1.Close();
                 serialPort1.PortName = toolStripComboBoxCOM.SelectedItem.ToString();
                 serialPort1.Open();
                 this.connectionchange("接続状態：接続");
-                
                 //加速度と角速度をstopされるまで出力する
                 switch (sv)
                 {
